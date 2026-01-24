@@ -7,7 +7,8 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen bg-background text-text selection:bg-primary selection:text-white">
+    <div className="min-h-screen bg-background text-text selection:bg-primary selection:text-black relative">
+       <div className="noise-overlay" />
       <Navbar />
       <main className="pt-16">
         {children}

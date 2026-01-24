@@ -45,8 +45,8 @@ export const Projects = () => {
                  </div>
 
                  <div className="flex gap-4 mt-auto">
-                   <a href="#" className="pointer-events-none opacity-50"><Button variant="outline" className="text-sm"><Github size={18} /> GitHub</Button></a>
-                   <a href="#" className="pointer-events-none opacity-50"><Button variant="primary" className="text-sm"><ExternalLink size={18} /> Live Demo</Button></a>
+                   <a href="https://github.com/abhisheksinha20p/Vera" target="_blank" rel="noopener noreferrer"><Button variant="outline" className="text-sm"><Github size={18} /> GitHub</Button></a>
+                   <a href="https://vera-3m9k2bkdy-avis-projects-87f288a4.vercel.app/" target="_blank" rel="noopener noreferrer"><Button variant="primary" className="text-sm"><ExternalLink size={18} /> Live Demo</Button></a>
                  </div>
                </div>
 

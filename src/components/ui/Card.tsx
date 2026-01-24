@@ -10,9 +10,9 @@ export const Card = ({ children, className = '', hoverEffect = false }: CardProp
   return (
     <div 
       className={`
-        glass p-6 rounded-2xl border border-white/5 
-        ${hoverEffect ? 'glass-hover hover:-translate-y-1' : ''} 
-        transition-all duration-300
+        bg-white/[0.02] p-8 border border-white/5 
+        ${hoverEffect ? 'hover:bg-white/[0.04] hover:border-white/10' : ''} 
+        transition-all duration-500 ease-out
         ${className}
       `}
     >
