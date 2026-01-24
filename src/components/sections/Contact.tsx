@@ -19,11 +19,17 @@ export const Contact = () => {
     setStatus('idle');
 
     try {
+      // Verify key presence
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      if (!publicKey) {
+        throw new Error("EmailJS Public Key is missing. Check .env file.");
+      }
+
       await emailjs.sendForm(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        publicKey
       );
       setStatus('success');
       formRef.current.reset();
