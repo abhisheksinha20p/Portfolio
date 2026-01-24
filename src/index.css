@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-text antialiased font-sans selection:bg-primary selection:text-black;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-glass backdrop-blur-md border border-white/10 shadow-lg;
+  }
+
+  .glass-hover {
+    @apply hover:bg-white/10 transition-all duration-300;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+  }
+}
