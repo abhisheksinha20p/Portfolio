@@ -25,7 +25,7 @@
     - [x] `Button` (Primary/Secondary styles)
     - [x] `SectionHeading` (Standardized typography)
     - [x] `Card` (Glassmorphism base style)
-    - [x] `ThemeToggle` (Light/Dark mode switcher)
+    - [x] `ThemeToggle` (Removed for Dark-only aesthetic)
 
 ## Phase 3: Sections Implementation
 - [x] **Hero Section**
@@ -63,7 +63,18 @@
     - [x] Meta title & description
     - [x] Favicon update
 
-## Phase 5: Deployment (Later)
+## Phase 5: Visual Redesign ("MILEZ" Aesthetic)
+- [x] **Setup & Global Styles**
+    - [x] Add `Playfair Display` font
+    - [x] Update `tailwind.config.js` (Colors, Fonts)
+    - [x] Create Noise Texture Overlay in `index.css`
+- [ ] **Component Overhaul**
+    - [x] Redesign **Hero Section** (Cinematic, Editorial)
+    - [x] Redesign **Navbar** (Minimal, Split)
+    - [x] Update **Cards** (Sharper, Darker)
+    - [ ] Update **Typography** (Serif Headings)
+
+## Phase 6: Deployment (Later)
 - [ ] Dockerfile creation
 - [ ] GitHub Actions workflow
 - [ ] Deploy to Vercel/AWS
