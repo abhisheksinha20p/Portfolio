@@ -1,26 +1,26 @@
 # Project Roadmap & TODO
 
 ## Phase 1: Setup & Infrastructure
-- [ ] **Initialize Project**
-    - [ ] Create Vite + React + TypeScript project
-    - [ ] Clean up default template files
-    - [ ] Initialize Git repository
-- [ ] **Dependencies**
-    - [ ] Install Tailwind CSS, PostCSS, Autoprefixer
-    - [ ] Install Framer Motion (Animations)
-    - [ ] Install Lucide React (Icons)
-    - [ ] Install React Router DOM (Navigation)
-- [ ] **Configuration**
-    - [ ] Configure `tailwind.config.js` (Theme colors: Dark `#0B0B0E`, Accents)
-    - [ ] Configure Fonts (Inter/Google Fonts)
-    - [ ] Setup `index.css` for global styles & base glassmorphism utility classes
+- [x] **Initialize Project**
+    - [x] Create Vite + React + TypeScript project
+    - [x] Clean up default template files
+    - [x] Initialize Git repository
+- [x] **Dependencies**
+    - [x] Install Tailwind CSS, PostCSS, Autoprefixer
+    - [x] Install Framer Motion (Animations)
+    - [x] Install Lucide React (Icons)
+    - [x] Install React Router DOM (Navigation)
+- [x] **Configuration**
+    - [x] Configure `tailwind.config.js` (Theme colors: Dark `#0B0B0E`, Accents)
+    - [x] Configure Fonts (Inter/Google Fonts)
+    - [x] Setup `index.css` for global styles & base glassmorphism utility classes
 
 ## Phase 2: Core Components & Layout
-- [ ] **Navigation & Layout**
-    - [ ] Create `Navbar` component (Sticky, Glassmorphism)
-    - [ ] Create `Footer` component
-    - [ ] Create `Layout` wrapper (Main content area)
-    - [ ] Implement Mobile Menu (Hamburger toggle)
+- [x] **Navigation & Layout**
+    - [x] Create `Navbar` component (Sticky, Glassmorphism)
+    - [x] Create `Footer` component
+    - [x] Create `Layout` wrapper (Main content area)
+    - [x] Implement Mobile Menu (Hamburger toggle)
 - [ ] **UI Components (Reusable)**
     - [ ] `Button` (Primary/Secondary styles)
     - [ ] `SectionHeading` (Standardized typography)
@@ -28,10 +28,10 @@
     - [ ] `ThemeToggle` (Light/Dark mode switcher)
 
 ## Phase 3: Sections Implementation
-- [ ] **Hero Section**
-    - [ ] Background animation (subtle particles or gradient)
-    - [ ] Typography & CTA alignment
-    - [ ] Initial entrance animations
+- [x] **Hero Section**
+    - [x] Background animation (subtle particles or gradient)
+    - [x] Typography & CTA alignment
+    - [x] Initial entrance animations
 - [ ] **About Section**
     - [ ] Split layout implementation (Text + Visual)
     - [ ] Timeline/Card for Education
