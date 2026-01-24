@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ export const Navbar = () => {
           
           {/* Desktop Menu */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-10 flex items-center space-x-8">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -46,6 +47,7 @@ export const Navbar = () => {
                   {link.name}
                 </a>
               ))}
+              <ThemeToggle />
             </div>
           </div>
           
