@@ -17,7 +17,18 @@ Access the site at `http://localhost:8080`.
 
 ---
 
-## 2. Vercel Deployment
+## 2. Netlify Deployment (Selected)
+
+1.  Connect your GitHub repository to Netlify.
+2.  **Build Settings:**
+    *   **Build Command:** `npm run build`
+    *   **Publish Directory:** `dist`
+3.  The included `netlify.toml` file will automatically handle routing (SPA redirects).
+4.  Click **Deploy**.
+
+---
+
+## 3. Vercel Deployment
 
 1.  Connect your GitHub repository to Vercel.
 2.  Vercel will automatically detect the **Vite** framework.
