@@ -59,9 +59,9 @@
 - [x] **Accessibility**
     - [x] Check contrast ratios
     - [x] Verify keyboard navigation
-- [ ] **SEO Basics**
-    - [ ] Meta title & description
-    - [ ] Favicon update
+- [x] **SEO Basics**
+    - [x] Meta title & description
+    - [x] Favicon update
 
 ## Phase 5: Deployment (Later)
 - [ ] Dockerfile creation
