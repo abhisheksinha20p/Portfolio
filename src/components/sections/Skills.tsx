@@ -7,7 +7,7 @@ const skillsData = [
   {
     category: "Backend & APIs",
     icon: <Server className="w-6 h-6 text-primary" />,
-    skills: ["Node.js", "Express.js", "REST APIs", "GraphQL", "Microservices"]
+    skills: ["Node.js", "Express.js", "REST APIs", "GraphQL", "Stripe Integration"]
   },
   {
     category: "Databases",
@@ -22,12 +22,12 @@ const skillsData = [
   {
     category: "Frontend",
     icon: <Globe className="w-6 h-6 text-secondary" />,
-    skills: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vite"]
+    skills: ["React", "TypeScript", "Tailwind CSS", "React Query", "Zustand"]
   },
   {
     category: "Security",
     icon: <Shield className="w-6 h-6 text-primary" />,
-    skills: ["JWT Auth", "OAuth", "Rate Limiting", "Data Encryption", "OWASP"]
+    skills: ["JWT Auth", "RBAC", "OAuth", "Rate Limiting", "Data Encryption"]
   },
   {
     category: "Tooling",
