@@ -91,7 +91,7 @@ export const Projects = () => {
 
               {/* Project Visual/Mockup Overlay */}
               <div className="relative bg-gradient-to-br from-gray-900 to-black p-8 flex items-center justify-center min-h-[300px]">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-[url('/img/clientflow.png')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
                 <div className="relative z-10 grid grid-cols-2 gap-4">
                   <div className="p-4 glass rounded-xl text-center">
                     <Layers className="w-8 h-8 text-primary mx-auto mb-2" />
@@ -186,7 +186,7 @@ export const Projects = () => {
 
               {/* Project Visual/Mockup Overlay */}
               <div className="relative bg-gradient-to-br from-gray-900 to-black p-8 flex items-center justify-center min-h-[300px]">
-                <div className="absolute inset-0 bg-[url('file:///C:/Users/abhis/.gemini/antigravity/brain/8bc3efcc-d0f9-4966-9d6b-bd6318132d8c/uploaded_media_1769408915966.png')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-[url('/img/vera_app.png')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
                 <div className="relative z-10 grid grid-cols-2 gap-4">
                   <div className="p-4 glass rounded-xl text-center">
                     <Layers className="w-8 h-8 text-primary mx-auto mb-2" />
