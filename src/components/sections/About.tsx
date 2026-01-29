@@ -50,35 +50,67 @@ export const About = () => {
             </div>
           </motion.div>
 
-          {/* Education & Timeline Side */}
+          {/* Experience & Education Timeline Side */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-6"
+            className="space-y-8"
           >
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <GraduationCap className="text-primary" /> Education
-            </h3>
+            {/* Experience Section */}
+            <div>
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <Code2 className="text-secondary" /> Experience
+              </h3>
 
-            <div className="relative border-l border-white/10 ml-3 pl-8 pb-8">
-              <div className="absolute w-4 h-4 bg-primary rounded-full -left-[9px] top-1 shadow-[0_0_10px_rgba(0,212,255,0.5)]" />
-              <Card>
-                <span className="text-primary text-sm font-mono mb-2 block">2024</span>
-                <h4 className="text-lg font-bold">Bachelor of Engineering</h4>
-                <p className="text-gray-400 text-sm">Electronics and Communications Engineering</p>
-                <div className="mt-2 text-sm text-gray-500">
-                  KLS Gogte Institute of Technology
-                </div>
-              </Card>
+              <div className="relative border-l border-white/10 ml-3 pl-8 pb-6">
+                <div className="absolute w-4 h-4 bg-secondary rounded-full -left-[9px] top-1 shadow-[0_0_10px_rgba(156,163,175,0.5)]" />
+                <Card>
+                  <span className="text-secondary text-sm font-mono mb-2 block">Oct 2025 — Present</span>
+                  <h4 className="text-lg font-bold">Full Stack & Mobile Developer</h4>
+                  <p className="text-gray-400 text-sm">Freelance at Tech Signific</p>
+                  <ul className="mt-2 text-sm text-gray-500 list-disc list-inside space-y-1">
+                    <li>Developing Fintech mobile applications with secure integration.</li>
+                    <li>Led architecture of Node.js/MongoDB backend for web & mobile.</li>
+                    <li>Utilized Docker for consistent production deployments.</li>
+                  </ul>
+                </Card>
+              </div>
+
+              <div className="relative border-l border-white/10 ml-3 pl-8">
+                <div className="absolute w-3 h-3 bg-white/30 rounded-full -left-[7px] top-1" />
+                <Card>
+                  <span className="text-gray-500 text-sm font-mono mb-2 block">Jan 2025 — Jul 2025</span>
+                  <h4 className="text-lg font-bold">Full Stack Developer Intern</h4>
+                  <p className="text-gray-400 text-sm">Tech Signific, Remote</p>
+                  <ul className="mt-2 text-sm text-gray-500 list-disc list-inside space-y-1">
+                    <li>Developed server-side logic and RESTful APIs using Node.js.</li>
+                    <li>Created responsive UIs with HTML, CSS, and Vanilla JavaScript.</li>
+                    <li>Participated in Agile sprints and code reviews.</li>
+                  </ul>
+                </Card>
+              </div>
             </div>
-             
-             {/* Future education or certifications could go here */}
-             <div className="relative border-l border-white/10 ml-3 pl-8">
-               <div className="absolute w-3 h-3 bg-white/20 rounded-full -left-[7px] top-1" />
-               <p className="text-sm text-muted italic">Continuous Learning & Certifications...</p>
-             </div>
+
+            {/* Education Section */}
+            <div>
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <GraduationCap className="text-primary" /> Education
+              </h3>
+
+              <div className="relative border-l border-white/10 ml-3 pl-8">
+                <div className="absolute w-4 h-4 bg-primary rounded-full -left-[9px] top-1 shadow-[0_0_10px_rgba(0,212,255,0.5)]" />
+                <Card>
+                  <span className="text-primary text-sm font-mono mb-2 block">2020 — 2024</span>
+                  <h4 className="text-lg font-bold">Bachelor of Engineering</h4>
+                  <p className="text-gray-400 text-sm">Electronics and Communications Engineering</p>
+                  <div className="mt-2 text-sm text-gray-500">
+                    KLS Gogte Institute of Technology, Belgaum
+                  </div>
+                </Card>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
