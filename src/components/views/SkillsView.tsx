@@ -28,19 +28,21 @@ export const SkillsView = () => {
       </div>
       <div className="space-y-10 max-w-3xl">
         {skills.map((section, sIdx) => (
-          <div key={sIdx} className="animate-fade-in-up" style={{animationDelay: `${sIdx * 0.2}s`}}>
-            <div className="text-[#B026FF] mb-4"># {section.category}</div>
-            <div className="space-y-4 pl-4 border-l border-white/10">
-              {section.items.map((skill, iIdx) => {
-                const totalBlocks = 30;
-                const filledBlocks = Math.floor((skill.val / 100) * totalBlocks);
-                const bar = '█'.repeat(filledBlocks) + '░'.repeat(totalBlocks - filledBlocks);
-                return (
-                  <div key={iIdx} className="group">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[#00F0FF]">{skill.name}</span>
-                      <span className="text-[#64748B] group-hover:text-[#39FF14] transition-colors">{skill.val}%</span>
-                    </div>
+  <div key={sIdx} className="animate-fade-in-up transform-gpu translate-z-0" style={{animationDelay: `${sIdx * 0.2}s`}}>
+    <div className="text-[#B026FF] mb-4 font-bold flex items-center gap-2">
+      <span className="opacity-50">#</span> {section.category}
+    </div>
+    <div className="space-y-4 pl-4 border-l border-white/10">
+      {section.items.map((skill, iIdx) => {
+        const totalBlocks = 30;
+        const filledBlocks = Math.floor((skill.val / 100) * totalBlocks);
+        const bar = '█'.repeat(filledBlocks) + '░'.repeat(totalBlocks - filledBlocks);
+        return (
+          <div key={iIdx} className="group transform-gpu">
+            <div className="flex items-center justify-between mb-1 translate-z-0">
+              <span className="text-[#00F0FF]">{skill.name}</span>
+              <span className="text-[#64748B] group-hover:text-[#39FF14] transition-colors duration-300">{skill.val}%</span>
+            </div>
                     <div className="text-[#39FF14]/50 group-hover:text-[#39FF14] group-hover:shadow-[0_0_15px_rgba(57,255,20,0.3)] transition-[color,shadow] duration-300 ease-out tracking-widest text-xs hidden sm:block transform-gpu translate-z-0">
                       [{bar}]
                     </div>

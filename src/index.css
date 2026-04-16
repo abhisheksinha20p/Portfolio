@@ -1,13 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply antialiased font-sans selection:bg-[#00F0FF] selection:text-black overflow-x-hidden;
+    @apply antialiased selection:bg-[#00F0FF] selection:text-black overflow-x-hidden;
+    font-family: 'Inter', sans-serif;
     cursor: default;
     background: #0A0A0F;
     color: #E2E8F0;
+  }
+
+  .font-mono {
+    font-family: 'Fira Code', monospace;
   }
 }
 
@@ -33,6 +40,9 @@
   .animate-fade-in-up {
     animation: fade-in-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0); /* Force Hardware Acceleration */
   }
   
   .writing-vertical-rl {
@@ -43,11 +53,11 @@
 @keyframes fade-in-up {
   0% {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(5px) translateZ(0);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
   }
 }
 

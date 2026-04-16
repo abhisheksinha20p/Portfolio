@@ -127,18 +127,6 @@ export const IDEWorkspace = () => {
 
   return (
     <div className="flex flex-col h-screen w-full bg-[#0A0A0F] overflow-hidden">
-      <style dangerouslySetInnerHTML={{__html: `
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0A0A0F; color: #E2E8F0; }
-        .font-mono { font-family: 'Fira Code', monospace; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.3); }
-        @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in-up { animation: fade-in-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-        @keyframes loadingSlide { 0% { width: 0%; transform: translateX(-100%); } 50% { width: 50%; } 100% { width: 0%; transform: translateX(300%); } }
-      `}} />
 
       {/* TOP WINDOW BAR */}
       <div className="h-10 shrink-0 w-full bg-[#0A0A0F] border-b border-white/5 flex items-center px-4 justify-between z-40">
