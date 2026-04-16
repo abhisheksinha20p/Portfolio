@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+# 🌌 AbhiOS v4.0 — The Ultimate Developer Workspace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <img src="public/banner.png" alt="AbhiOS Banner" width="100%">
+</p>
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ⚡ Elevating the Digital Portfolio Experience
 
-## React Compiler
+**AbhiOS** isn't just a portfolio; it's a high-performance **Virtual Development Environment** built to showcase the intersection of design and engineering. It's a living demonstration of modern web capabilities, featuring a fully interactive IDE, a secure AI Copilot, and a lightning-fast terminal.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ The Core Engine
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Tech | Role |
+| :--- | :--- |
+| **React 19** | Modern, high-performance UI rendering |
+| **TypeScript** | Type-safe development at scale |
+| **Tailwind CSS** | Precision glassmorphism & responsive layouts |
+| **Groq / Llama 3.1** | State-of-the-art AI inference |
+| **Netlify Functions** | Secure, serverless backend proxying |
+| **DOMPurify** | Enterprise-grade content sanitization |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 System Capabilities
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🖥️ Interactive IDE Workspace
+A pixel-perfect recreation of a modern code editor. Experience real-time file exploration, tabbed navigation, and a focus-driven UI that feels alive.
+
+### 🤖 Integrated AI Copilot
+Powered by **Llama 3.1-8b-instant** on **Groq Cloud**. Ask anything about my professional journey, technical expertise, or project architecture.
+> **Security First**: All AI interactions are proxied via serverless functions to keep secrets internal.
+
+### 🐚 Hyper-Responsive Terminal
+A functional CLI integration for those who prefer the speed of the terminal. Run commands, explore the system, and interact with the kernel in real-time.
+
+### 🧱 Hardened Security
+- **Serverless Proxies**: Sensitive API keys never touch the client.
+- **IP Rate Limiting**: Intelligent abuse prevention at the edge.
+- **XSS Guardian**: Every AI response is sanitized via DOMPurify before rendering.
+
+---
+
+## 📦 Installation Routine
+
+Fuel up your local environment in minutes:
+
+```bash
+# Clone the OS
+git clone https://github.com/abhisheksinha20p/Portfolio.git
+
+# Navigate to core
+cd Portfolio
+
+# Install system dependencies
+npm install
+
+# Initialize local dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ☁️ Cloud Deployment
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Optimized for **Netlify Edge** deployment.
+
+1. **Connect Repo**: Pair your branch with Netlify.
+2. **Global Variables**: Inject `GROQ_API_KEY` into the Netlify Dashboard Environment (keep it secret, keep it safe).
+3. **Execution**: Netlify handles the rest, deploying `dist` to the global CDN and initializing serverless handlers in `netlify/functions`.
+
+---
+
+## 🛰️ Navigation Matrix
+
+- `src/layout/`: The structural backbone of the IDE.
+- `src/sections/`: High-fidelity project & experience artboards.
+- `src/lib/ai.ts`: The secure bridge to the AI kernel.
+- `netlify/functions/`: Server-side intelligence & rate-control logic.
+
+---
+
+<p align="center">
+  Built with ☕ and 💖 by <b>Abhishek Sinha</b>
+</p>
