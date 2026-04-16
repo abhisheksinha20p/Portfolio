@@ -1,5 +1,5 @@
-import React from 'react';
-import { ChevronDown, GitCommit, GitBranch, FileCode2, Blocks, Search, MoreHorizontal, Settings } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronDown, GitBranch, FileCode2, Blocks, Search, MoreHorizontal, Settings } from 'lucide-react';
 import { FILES, PROJECTS, TIMELINE, type FileConfig } from '../../data/portfolio';
 
 interface SidebarProps {
@@ -14,6 +14,7 @@ interface SidebarProps {
   extensionSearch?: string;
   setExtensionSearch?: (query: string) => void;
   setSearchQuery?: (query: string) => void;
+  width?: number;
 }
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -21,6 +22,12 @@ const iconMap: Record<string, React.ReactNode> = {
   TerminalSquare: <Blocks size={16} className="text-[#39FF14]" />,
   Mail: <Blocks size={16} className="text-[#B026FF]" />,
   FileJson: <Blocks size={16} className="text-[#FFBD2E]" />,
+};
+
+const BRANCH_CONFIG: Record<string, { x: number, color: string, dim: string }> = {
+  'main': { x: 14, color: '#378ADD', dim: 'rgba(55, 138, 221, 0.15)' },
+  'feature/vera-core': { x: 38, color: '#1D9E75', dim: 'rgba(29, 158, 117, 0.15)' },
+  'default': { x: 14, color: '#64748B', dim: 'rgba(100, 116, 139, 0.15)' }
 };
 
 export const Sidebar = ({ 
@@ -35,7 +42,9 @@ export const Sidebar = ({
   extensionSearch = '',
   setExtensionSearch = () => {},
   setSearchQuery = () => {},
+  width,
 }: SidebarProps) => {
+  const [selectedHash, setSelectedHash] = useState<string | null>(null);
   if (!isOpen) return null;
 
   const renderContent = () => {
@@ -120,34 +129,160 @@ export const Sidebar = ({
           </div>
         );
 
-      case 'git':
+      case 'git': {
+        const ROW_H = 90;
+        const NODE_Y_OFFSET = 28; // vertical center of node within the row
+        const svgH = TIMELINE.length * ROW_H;
+
         return (
-          <div className="flex flex-col flex-1 p-4 overflow-y-auto custom-scrollbar animate-fade-in-up">
-            <div className="text-xs font-bold tracking-widest text-[#64748B] mb-2">SOURCE CONTROL</div>
-            <div className="flex items-center gap-2 mb-6 font-mono text-xs bg-[#39FF14]/5 border border-[#39FF14]/20 rounded p-2 text-[#39FF14]">
+          <div className="flex flex-col flex-1 p-4 overflow-hidden animate-fade-in-up font-sans">
+            {/* Header */}
+            <div className="text-[10px] font-bold tracking-widest text-[#64748B] mb-2 uppercase font-mono">Source Control</div>
+            <div className="flex items-center gap-2 mb-4 font-mono text-[10px] bg-[#378ADD]/5 border border-[#378ADD]/20 rounded p-2 text-[#378ADD]">
               <GitBranch size={12} /> <span>main</span>
-              <span className="ml-auto text-[#64748B]">↑2 ↓0</span>
+              <span className="ml-auto text-[#64748B] opacity-50">{TIMELINE.length} commits · 2 branches</span>
             </div>
-            <div className="text-xs font-bold tracking-widest text-[#64748B] mb-4">COMMIT HISTORY</div>
-            <div className="relative border-l border-[#64748B]/30 ml-3 space-y-6">
-              {TIMELINE.map((item, i) => (
-                <div key={item.hash || i} className="relative pl-6 group">
-                  <div className="absolute -left-[9px] top-1 bg-[#12121A] p-0.5 rounded-full border border-[#00F0FF] group-hover:bg-[#00F0FF]/20 transition-colors">
-                    <GitCommit size={12} className={item.type === 'project' ? "text-[#00F0FF]" : "text-[#B026FF]"} />
-                  </div>
-                  <div className="text-[10px] text-[#64748B] font-mono mb-1">{item.date} • [{item.hash}]</div>
-                  <div className="text-sm text-[#E2E8F0] font-sans font-semibold group-hover:text-white transition-colors">{item.title}</div>
-                  <div className="text-xs text-[#64748B] font-mono mt-1 leading-relaxed">{item.desc}</div>
-                </div>
-              ))}
+            <div className="text-[10px] font-bold tracking-widest text-[#64748B] mb-3 uppercase font-mono shrink-0">Commit History</div>
+
+            {/* Scrollable area — height is locked to exact content */}
+            <div className="overflow-y-auto custom-scrollbar" style={{ height: svgH }}>
+              <div className="relative" style={{ height: svgH }}>
+
+                {/* ── SVG graph layer ── */}
+                <svg
+                  width="56"
+                  height={svgH}
+                  className="absolute left-0 top-0 pointer-events-none z-0"
+                  style={{ overflow: 'visible' }}
+                >
+                  {/* Ghost rails — one per branch column */}
+                  <line x1={14} y1={0} x2={14} y2={svgH} stroke="#378ADD" strokeWidth="1.5" opacity="0.08" />
+                  <line x1={38} y1={0} x2={38} y2={svgH} stroke="#1D9E75" strokeWidth="1.5" opacity="0.08" />
+
+                  {/* Segment lines / bezier curves between consecutive commits */}
+                  {TIMELINE.map((item, i) => {
+                    if (i === 0) return null;
+                    const prev = TIMELINE[i - 1];
+                    const cB = BRANCH_CONFIG[item.branch || 'main'] || BRANCH_CONFIG['default'];
+                    const pB = BRANCH_CONFIG[prev.branch || 'main'] || BRANCH_CONFIG['default'];
+                    const y1 = (i - 1) * ROW_H + NODE_Y_OFFSET;
+                    const y2 = i * ROW_H + NODE_Y_OFFSET;
+
+                    if (cB.x !== pB.x) {
+                      return (
+                        <path
+                          key={`seg-${i}`}
+                          d={`M${pB.x},${y1} C${pB.x},${y1 + 30} ${cB.x},${y2 - 30} ${cB.x},${y2}`}
+                          fill="none"
+                          stroke={cB.color}
+                          strokeWidth="1.5"
+                          strokeDasharray="4 3"
+                          opacity="0.4"
+                        />
+                      );
+                    }
+                    return (
+                      <line
+                        key={`seg-${i}`}
+                        x1={cB.x} y1={y1}
+                        x2={cB.x} y2={y2}
+                        stroke={cB.color}
+                        strokeWidth="1.5"
+                        opacity="0.25"
+                      />
+                    );
+                  })}
+
+                  {/* Commit nodes — drawn on top of lines */}
+                  {TIMELINE.map((item, i) => {
+                    const bCfg = BRANCH_CONFIG[item.branch || 'main'] || BRANCH_CONFIG['default'];
+                    const cy = i * ROW_H + NODE_Y_OFFSET;
+                    const isSelected = selectedHash === item.hash;
+                    return (
+                      <g key={`node-${i}`}>
+                        {/* Outer ring */}
+                        <circle
+                          cx={bCfg.x} cy={cy} r={isSelected ? 7 : 5.5}
+                          fill="#0D0D14"
+                          stroke={isSelected ? '#00F0FF' : bCfg.color}
+                          strokeWidth={isSelected ? 2 : 1.5}
+                          style={{ filter: isSelected ? 'drop-shadow(0 0 6px #00F0FF)' : 'none', transition: 'all 0.2s' }}
+                        />
+                        {/* Inner dot */}
+                        <circle
+                          cx={bCfg.x} cy={cy} r={isSelected ? 3 : 2.5}
+                          fill={isSelected ? '#00F0FF' : bCfg.color}
+                        />
+                      </g>
+                    );
+                  })}
+                </svg>
+
+                {/* ── Text rows layer ── */}
+                {TIMELINE.map((item, i) => {
+                  const bCfg = BRANCH_CONFIG[item.branch || 'main'] || BRANCH_CONFIG['default'];
+                  const isSelected = selectedHash === item.hash;
+                  return (
+                    <div
+                      key={item.hash}
+                      className="absolute left-0 right-0 group cursor-pointer"
+                      style={{ top: i * ROW_H, height: ROW_H }}
+                      onClick={() => {
+                        setSelectedHash(isSelected ? null : item.hash);
+                        onOpenTab(`git:${item.hash}`);
+                      }}
+                    >
+                      {/* Text content — offset past the SVG column */}
+                      <div className="absolute left-12 right-2 top-0 bottom-0 flex flex-col justify-center py-2 pr-1">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span
+                            className="text-[9px] font-mono"
+                            style={{ color: isSelected ? '#00F0FF' : '#64748B' }}
+                          >
+                            {item.date}
+                          </span>
+                          <span className="text-[9px] font-mono text-[#64748B] opacity-40">
+                            [{item.hash.substring(0, 7)}]
+                          </span>
+                          {/* Branch badge */}
+                          {item.branch && item.branch !== 'main' && (
+                            <span
+                              className="text-[8px] font-mono px-1 rounded"
+                              style={{ color: bCfg.color, backgroundColor: bCfg.dim, border: `1px solid ${bCfg.color}40` }}
+                            >
+                              {item.branch}
+                            </span>
+                          )}
+                        </div>
+                        <div
+                          className="text-[12px] font-bold leading-tight mb-1 transition-colors"
+                          style={{ color: isSelected ? '#fff' : '#E2E8F0' }}
+                        >
+                          {item.title}
+                        </div>
+                        <div className="text-[10px] text-[#64748B] truncate leading-snug">
+                          {item.desc}
+                        </div>
+                      </div>
+
+                      {/* Hover/active left accent */}
+                      <div
+                        className="absolute left-0 top-2 bottom-2 w-0.5 rounded transition-all duration-200"
+                        style={{ backgroundColor: isSelected ? '#00F0FF' : 'transparent', opacity: isSelected ? 1 : 0 }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         );
+      }
 
       case 'extensions':
-        const filteredProjects = PROJECTS.filter(p => p.name.toLowerCase().includes(extensionSearch.toLowerCase()));
-        const installed = filteredProjects.filter(p => installedProjects.includes(p.id));
-        const recommended = filteredProjects.filter(p => !installedProjects.includes(p.id));
+        const filteredP = PROJECTS.filter(p => p.name.toLowerCase().includes(extensionSearch.toLowerCase()));
+        const inst = filteredP.filter(p => installedProjects.includes(p.id));
+        const rec = filteredP.filter(p => !installedProjects.includes(p.id));
 
         return (
           <div className="flex flex-col flex-1 overflow-hidden animate-fade-in-up">
@@ -157,108 +292,76 @@ export const Sidebar = ({
             </div>
             
             <div className="px-4 pb-3 shrink-0">
-              <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Search Extensions in Marketplace" 
-                  value={extensionSearch} 
-                  onChange={e => setExtensionSearch(e.target.value)}
-                  className="w-full bg-[#0A0A0F] border border-white/10 rounded pl-2 pr-2 py-1.5 text-xs font-mono text-white focus:outline-none focus:border-[#00F0FF] transition-colors"
-                />
-              </div>
+              <input 
+                type="text" 
+                placeholder="Search Extensions" 
+                value={extensionSearch} 
+                onChange={e => setExtensionSearch(e.target.value)}
+                className="w-full bg-[#0A0A0F] border border-white/10 rounded px-2 py-1.5 text-xs font-mono text-white focus:outline-none focus:border-[#00F0FF] transition-colors"
+              />
             </div>
 
             <div className="flex-1 overflow-y-auto custom-scrollbar">
-              {installed.length > 0 && (
+              {inst.length > 0 && (
                 <div className="mb-2">
                   <div className="flex items-center gap-1 px-2 py-1 bg-white/[0.02] cursor-pointer text-xs font-bold text-[#E2E8F0] sticky top-0 z-10 backdrop-blur-sm">
-                    <ChevronDown size={14} /> <span>INSTALLED ({installed.length})</span>
+                    <ChevronDown size={14} /> <span>INSTALLED ({inst.length})</span>
                   </div>
-                  <div className="flex flex-col">
-                    {installed.map(proj => (
-                      <div 
-                        key={proj.id} 
-                        onClick={() => onOpenTab(`ext:${proj.id}`)}
-                        className={`group flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors border-l-2 ${
-                          activeTab === `ext:${proj.id}` 
-                            ? 'bg-[#00F0FF]/10 border-[#00F0FF]' 
-                            : 'border-transparent hover:bg-white/5'
-                        }`}
-                      >
-                        <Blocks size={28} className="text-[#00F0FF] shrink-0 opacity-80" />
+                  {inst.map(proj => (
+                    <div key={proj.id} onClick={() => onOpenTab(`ext:${proj.id}`)} className={`group flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors border-l-2 ${activeTab === `ext:${proj.id}` ? 'bg-[#00F0FF]/10 border-[#00F0FF]' : 'border-transparent hover:bg-white/5'}`}>
+                      <Blocks size={28} className="text-[#00F0FF] shrink-0 opacity-80" />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-semibold text-white truncate leading-tight flex items-center justify-between">
+                          {proj.name} 
+                          <Settings size={12} className="text-[#64748B] invisible group-hover:visible" />
+                        </div>
+                        <div className="text-[10px] text-[#64748B] truncate mt-0.5">{proj.shortDesc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {rec.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-1 px-2 py-1 bg-white/[0.02] cursor-pointer text-xs font-bold text-[#E2E8F0] sticky top-0 z-10 backdrop-blur-sm">
+                    <ChevronDown size={14} /> <span>RECOMMENDED ({rec.length})</span>
+                  </div>
+                  {rec.map(proj => {
+                    const isInstalling = installingProject === proj.id;
+                    return (
+                      <div key={proj.id} onClick={() => onOpenTab(`ext:${proj.id}`)} className={`group flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors border-l-2 relative ${activeTab === `ext:${proj.id}` ? 'bg-[#00F0FF]/5 border-[#00F0FF]/50' : 'border-transparent hover:bg-white/5'}`}>
+                        <Blocks size={28} className="text-[#64748B] shrink-0" />
                         <div className="min-w-0 flex-1">
-                          <div className="text-sm font-semibold text-white truncate leading-tight flex items-center justify-between">
-                            {proj.name} 
-                            <Settings size={12} className="text-[#64748B] hover:text-white invisible group-hover:visible" />
-                          </div>
+                          <div className="text-sm font-semibold text-[#E2E8F0] truncate leading-tight">{proj.name}</div>
                           <div className="text-[10px] text-[#64748B] truncate mt-0.5">{proj.shortDesc}</div>
-                          <div className="flex items-center gap-2 mt-1.5 text-[10px] text-[#64748B]">
-                            <span className="bg-[#00F0FF]/10 text-[#00F0FF] px-1 rounded border border-[#00F0FF]/20">v{proj.version}</span>
-                            <span>{proj.publisher}</span>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-[10px] text-[#64748B] flex items-center gap-1">
+                              <Blocks size={10}/> {proj.stars}
+                            </span>
+                            <button 
+                              onClick={(e) => { 
+                                e.stopPropagation(); 
+                                onInstallProject?.(proj.id); 
+                              }}
+                              disabled={isInstalling}
+                              className={`text-[10px] px-2 py-0.5 rounded font-bold transition-colors ${
+                                isInstalling ? 'text-[#00F0FF]' : 'bg-[#00F0FF] text-black hover:bg-white'
+                              }`}
+                            >
+                              {isInstalling ? 'Installing...' : 'Install'}
+                            </button>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {recommended.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-1 px-2 py-1 bg-white/[0.02] cursor-pointer text-xs font-bold text-[#E2E8F0] sticky top-0 z-10 backdrop-blur-sm">
-                    <ChevronDown size={14} /> <span>RECOMMENDED ({recommended.length})</span>
-                  </div>
-                  <div className="flex flex-col">
-                    {recommended.map(proj => {
-                      const isInstalling = installingProject === proj.id;
-                      return (
-                        <div 
-                          key={proj.id} 
-                          onClick={() => onOpenTab(`ext:${proj.id}`)}
-                          className={`group flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors border-l-2 relative ${
-                            activeTab === `ext:${proj.id}` 
-                              ? 'bg-[#00F0FF]/5 border-[#00F0FF]/50' 
-                              : 'border-transparent hover:bg-white/5'
-                          }`}
-                        >
-                          <Blocks size={28} className="text-[#64748B] shrink-0" />
-                          <div className="min-w-0 flex-1">
-                            <div className="text-sm font-semibold text-[#E2E8F0] truncate leading-tight">{proj.name}</div>
-                            <div className="text-[10px] text-[#64748B] truncate mt-0.5">{proj.shortDesc}</div>
-                            <div className="flex items-center justify-between mt-2">
-                              <span className="text-[10px] text-[#64748B] flex items-center gap-1">
-                                <Blocks size={10}/> {proj.stars}
-                              </span>
-                              <button 
-                                onClick={(e) => { 
-                                  e.stopPropagation(); 
-                                  onInstallProject?.(proj.id); 
-                                }}
-                                disabled={isInstalling}
-                                className={`text-[10px] px-2 py-0.5 rounded font-bold transition-colors ${
-                                  isInstalling 
-                                    ? 'bg-transparent text-[#00F0FF]' 
-                                    : 'bg-[#00F0FF] text-black hover:bg-white'
-                                }`}
-                              >
-                                {isInstalling ? 'Installing...' : 'Install'}
-                              </button>
-                            </div>
-                            {isInstalling && (
-                              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#12121A]">
-                                <div className="h-full bg-[#00F0FF] animate-[loadingSlide_1s_ease-in-out_infinite]"></div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
           </div>
         );
+
 
       default:
         return <div className="p-4 text-xs text-[#64748B] uppercase tracking-widest">{activeView}</div>;
@@ -266,7 +369,10 @@ export const Sidebar = ({
   };
 
   return (
-    <div className="w-64 shrink-0 bg-[#12121A]/90 backdrop-blur-md flex flex-col border-r border-white/5 z-20 overflow-hidden">
+    <div 
+      className="bg-[#12121A]/90 backdrop-blur-md flex flex-col border-r border-white/5 z-20 overflow-hidden shrink-0"
+      style={{ width }}
+    >
       {renderContent()}
     </div>
   );

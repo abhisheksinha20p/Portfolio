@@ -1,5 +1,5 @@
-import { X, Blocks, Activity } from 'lucide-react';
-import { FILES, PROJECTS } from '../../data/portfolio';
+import { X, Blocks, Activity, GitCommit } from 'lucide-react';
+import { FILES, PROJECTS, TIMELINE } from '../../data/portfolio';
 
 interface TabBarProps {
   openTabs: string[];
@@ -32,6 +32,12 @@ export const TabBar = ({ openTabs, activeTab, onActivateTab, onCloseTab }: TabBa
       icon = isRun 
         ? <Activity size={16} className="text-[#39FF14]"/> 
         : <Blocks size={16} className="text-[#00F0FF]" />;
+    } else if (id.startsWith('git:')) {
+      const hash = id.replace('git:', '');
+      const commit = TIMELINE.find(t => t.hash === hash);
+      const isFeature = commit?.branch && commit.branch !== 'main';
+      displayName = `commit: ${hash.substring(0, 7)}`;
+      icon = <GitCommit size={16} className={isFeature ? 'text-[#1D9E75]' : 'text-[#378ADD]'} />;
     }
 
     return { displayName, icon };

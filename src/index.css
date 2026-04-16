@@ -74,3 +74,20 @@
     transform: translateX(300%);
   }
 }
+
+/* ─── Onboarding Tour ─── */
+.tour-highlight {
+  position: relative;
+  z-index: 9002;
+  border-radius: 8px;
+  animation: tourPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes tourPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 240, 255, 0), 0 0 0 3px rgba(0, 240, 255, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(0, 240, 255, 0.15), 0 0 0 3px rgba(0, 240, 255, 0.6);
+  }
+}

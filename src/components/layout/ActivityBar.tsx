@@ -1,13 +1,14 @@
 import { Files, Search, GitBranch, Blocks, Settings } from 'lucide-react';
 
 interface ActivityBarProps {
+  id?: string;
   activeView: string;
   onViewChange: (view: string) => void;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
 }
 
-export const ActivityBar = ({ activeView, onViewChange, sidebarOpen, setSidebarOpen }: ActivityBarProps) => {
+export const ActivityBar = ({ id, activeView, onViewChange, sidebarOpen, setSidebarOpen }: ActivityBarProps) => {
   const items = [
     { view: 'explorer', Icon: Files },
     { view: 'search', Icon: Search },
@@ -16,7 +17,7 @@ export const ActivityBar = ({ activeView, onViewChange, sidebarOpen, setSidebarO
   ];
 
   return (
-    <div className="w-14 shrink-0 bg-[#0A0A0F] border-r border-white/5 flex flex-col items-center py-4 gap-6 z-30" role="tablist">
+    <div id={id} className="w-14 shrink-0 bg-[#0A0A0F] border-r border-white/5 flex flex-col items-center py-4 gap-6 z-30" role="tablist">
       {items.map(({ view, Icon }) => (
         <div 
           key={view} 

@@ -29,6 +29,8 @@ export interface TimelineItem {
   title: string;
   desc: string;
   hash: string;
+  branch?: string;
+  details?: string[];
 }
 
 export interface TerminalBootItem {
@@ -89,11 +91,64 @@ export const PROJECTS = [
 ];
 
 export const TIMELINE: TimelineItem[] = [
-  { type: 'experience', date: 'Oct 2025', title: 'Full Stack & Mobile Developer', desc: 'Freelance at Tech Signific. Building Fintech mobile apps.', hash: 'e4f5g6h' },
-  { type: 'experience', date: 'Jan 2025', title: 'Full Stack Developer Intern', desc: 'Tech Signific. Developed REST APIs and responsive UIs.', hash: 'z1x2c3v' },
-  { type: 'project', date: 'Oct 2024', title: 'Deployed ClientFlow', desc: 'Released v1.0.0 with dual-portal system and Stripe integration.', hash: 'a1b2c3d' },
-  { type: 'project', date: 'Sep 2024', title: 'Released Vera', desc: 'Launched task management app with glassmorphism UI.', hash: '7j8k9l0' },
+  { 
+    type: 'experience', 
+    date: 'Oct 2025 - Present', 
+    title: 'Full Stack & Mobile Developer (Freelance)', 
+    branch: 'main',
+    desc: 'Engineering scalable fintech solutions and architecting high-performance cross-platform mobile architectures.', 
+    details: [
+      'Architected decentralized fintech modules using React Native and high-concurrency Node.js backends.',
+      'Hardened security posture by implementing advanced JWT-based authentication and granular RBAC.',
+      'Engineered optimized MongoDB schemas supporting thousands of concurrent financial transactions.',
+      'Deployed resilient cloud environments using Docker-orchestrated microservices.'
+    ],
+    hash: '8f2e4a1' 
+  },
+  { 
+    type: 'project', 
+    date: 'Jul 2025 - Sep 2025', 
+    title: 'ClientFlow: Enterprise Freelance Ecosystem', 
+    branch: 'main',
+    desc: 'Led the engineering of a distributed management platform for freelancers and enterprise clients.', 
+    details: [
+      'Architected a multi-tenant portal system with isolation and secure data persistence.',
+      'Integrated Stripe Connect for complex global payout logistics and automated invoicing.',
+      'Containerized the full-stack infrastructure for consistent Dev-to-Prod parity.',
+      'Refactored the frontend architecture to achieve sub-200ms TTFB and premium UX interactivity.'
+    ],
+    hash: 'c8d4b92' 
+  },
+  { 
+    type: 'experience', 
+    date: 'Jan 2025 - Jul 2025', 
+    title: 'Software Engineering Intern — Tech Signific', 
+    branch: 'main',
+    desc: 'Engineered production-level backend infrastructure and responsive client-facing interfaces.', 
+    details: [
+      'Developed low-latency RESTful APIs and optimized SQL/NoSQL query complexity.',
+      'Collaborated within an Agile engineering team using Git-driven CI/CD workflows.',
+      'Built a reusable design system of UI components with modern CSS and modular JavaScript.',
+      'Executed end-to-end testing protocols and rapid debugging for high-traffic client deployments.'
+    ],
+    hash: 'a1f3e5b' 
+  },
+  { 
+    type: 'project', 
+    date: 'Jan 2025 - Jun 2025', 
+    title: 'Vera: Minimalist Productivity Stack', 
+    branch: 'feature/vera-core',
+    desc: 'Parallel R&D project focused on extreme performance and innovative task management patterns.', 
+    details: [
+      'Built a TypeScript-first stack leveraging MongoDB for fluid real-time data streaming.',
+      'Implemented advanced client-side state management for seamless offline-first interactions.',
+      'Developed a custom glassmorphism UI framework optimized for developer productivity.',
+      'Merged core accessibility and performance optimizations into the main product roadmap.'
+    ],
+    hash: 'v0e9r8a' 
+  },
 ];
+
 
 export const TERMINAL_BOOT: TerminalBootItem[] = [
   { delay: 0, text: "> Initializing AbhiOS v4.2...", color: "#64748B" },

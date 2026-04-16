@@ -5,6 +5,7 @@ import { chatWithAI } from '../../lib/ai';
 interface AICopilotPanelProps {
   isOpen: boolean;
   onClose: () => void;
+  width?: number;
 }
 
 interface Message {
@@ -12,7 +13,7 @@ interface Message {
   text: string;
 }
 
-export const AICopilotPanel = ({ isOpen, onClose }: AICopilotPanelProps) => {
+export const AICopilotPanel = ({ isOpen, onClose, width }: AICopilotPanelProps) => {
   const [aiInput, setAiInput] = useState('');
   const [aiMessages, setAiMessages] = useState<Message[]>([
     { role: 'ai', text: 'AbhiOS Copilot initialized. Ask me anything about Abhi\'s skills or projects.' }
@@ -48,7 +49,10 @@ export const AICopilotPanel = ({ isOpen, onClose }: AICopilotPanelProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="w-80 shrink-0 bg-[#0A0A0F] border-l border-white/5 flex flex-col z-20 shadow-[-10px_0_30px_rgba(0,0,0,0.5)]">
+    <div 
+      className="shrink-0 bg-[#0A0A0F] border-l border-white/5 flex flex-col z-20 shadow-[-10px_0_30px_rgba(0,0,0,0.5)]"
+      style={{ width }}
+    >
       <div className="h-10 border-b border-white/5 flex items-center justify-between px-4 shrink-0">
         <div className="flex items-center gap-2 text-sm font-sans font-bold text-white">
           <Bot size={16} className="text-[#00F0FF]" /> AbhiOS Copilot
