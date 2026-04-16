@@ -41,7 +41,7 @@ export const SkillsView = () => {
                       <span className="text-[#00F0FF]">{skill.name}</span>
                       <span className="text-[#64748B] group-hover:text-[#39FF14] transition-colors">{skill.val}%</span>
                     </div>
-                    <div className="text-[#39FF14]/50 group-hover:text-[#39FF14] group-hover:shadow-[0_0_10px_rgba(57,255,20,0.2)] transition-all tracking-widest text-xs hidden sm:block">
+                    <div className="text-[#39FF14]/50 group-hover:text-[#39FF14] group-hover:shadow-[0_0_15px_rgba(57,255,20,0.3)] transition-[color,shadow] duration-300 ease-out tracking-widest text-xs hidden sm:block transform-gpu translate-z-0">
                       [{bar}]
                     </div>
                     <div className="w-full h-1.5 bg-white/5 rounded overflow-hidden sm:hidden mt-2">
