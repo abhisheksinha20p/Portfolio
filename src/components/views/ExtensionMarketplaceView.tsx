@@ -141,8 +141,8 @@ export const ExtensionMarketplaceView = ({
                   ))}
                 </div>
                 <ul className="list-disc pl-5 space-y-2 text-[#94A3B8] text-sm marker:text-[#00F0FF]">
-                  {project.tech.map((t: string) => (
-                    <li key={t}>Built with performance-first {t} architecture.</li>
+                  {project.features.map((feature: string, index: number) => (
+                    <li key={index}>{feature}</li>
                   ))}
                   <li>Seamless integration with AbhiOS ecosystem.</li>
                   <li>Custom dark mode theming out of the box.</li>

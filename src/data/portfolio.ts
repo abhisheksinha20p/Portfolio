@@ -11,6 +11,7 @@ export interface Project {
   version: string;
   publisher: string;
   tech: string[];
+  features: string[];
   shortDesc: string;
   desc: string;
   image: string;
@@ -55,6 +56,12 @@ export const PROJECTS = [
     version: "v1.0.0",
     publisher: "abhisheksinha20p",
     tech: ["React", "TypeScript", "Node.js", "Express", "MongoDB", "Stripe", "Docker", "Tailwind CSS"],
+    features: [
+      "Architected a multi-tenant portal system with isolation and secure data persistence.",
+      "Integrated Stripe Connect for complex global payout logistics and automated invoicing.",
+      "Containerized the full-stack infrastructure for consistent Dev-to-Prod parity.",
+      "Refactored the frontend architecture to achieve sub-200ms TTFB and premium UX interactivity."
+    ],
     shortDesc: "Freelance management platform for client relationships and project tracking.",
     desc: "ClientFlow is a comprehensive freelance management platform designed to streamline client relationships, project tracking, and invoicing. Provides a centralized dashboard for freelancers and a secure portal for clients. Features dual-portal access, RBAC authentication, and Stripe payment integration.",
     image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800",
@@ -75,6 +82,12 @@ export const PROJECTS = [
     version: "v1.0.0",
     publisher: "abhisheksinha20p",
     tech: ["React", "TypeScript", "Node.js", "Express", "MongoDB", "Docker"],
+    features: [
+      "Built a TypeScript-first stack leveraging MongoDB for fluid real-time data streaming.",
+      "Implemented advanced client-side state management for seamless offline-first interactions.",
+      "Developed a custom glassmorphism UI framework optimized for developer productivity.",
+      "Merged core accessibility and performance optimizations into the main product roadmap."
+    ],
     shortDesc: "Modern task management application focused on simplicity and productivity.",
     desc: "Vera is a modern full-stack task management application focused on simplicity and productivity. Features secure authentication, a focus dashboard, and a clean glassmorphism-based UI. Designed to help users stay organized and productive with minimal friction.",
     image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=800",
@@ -94,7 +107,7 @@ export const TIMELINE: TimelineItem[] = [
   { 
     type: 'experience', 
     date: 'Oct 2025 - Present', 
-    title: 'Full Stack & Mobile Developer (Freelance)', 
+    title: 'Full Stack & Mobile Developer (Freelance) — Tech Signific', 
     branch: 'main',
     desc: 'Engineering scalable fintech solutions and architecting high-performance cross-platform mobile architectures.', 
     details: [
@@ -122,7 +135,7 @@ export const TIMELINE: TimelineItem[] = [
   { 
     type: 'experience', 
     date: 'Jan 2025 - Jul 2025', 
-    title: 'Software Engineering Intern — Tech Signific', 
+    title: 'Full Stack Developer Intern — Tech Signific', 
     branch: 'main',
     desc: 'Engineered production-level backend infrastructure and responsive client-facing interfaces.', 
     details: [
