@@ -4,14 +4,14 @@
       - img [ref=e11]
       - text: AbhiOS Workspace
     - generic [ref=e14]:
-      - generic [ref=e15]: 08:50 PM
+      - generic [ref=e15]: 09:05 PM
       - button [ref=e16] [cursor=pointer]:
         - img [ref=e17]
       - button [ref=e19] [cursor=pointer]:
         - img [ref=e20]
   - generic [ref=e23]:
     - tablist [ref=e24]:
-      - button "Open explorer view" [ref=e25] [cursor=pointer]:
+      - button "Open explorer view" [active] [ref=e25] [cursor=pointer]:
         - img [ref=e26]
       - button "Open search view" [ref=e30] [cursor=pointer]:
         - img [ref=e31]
@@ -21,86 +21,76 @@
         - img [ref=e40]
       - img [ref=e45]
     - generic [ref=e50]:
-      - generic [ref=e51]:
-        - generic [ref=e52]: EXTENSIONS
-        - img [ref=e53] [cursor=pointer]
-      - textbox "Search Extensions" [ref=e58]
-      - generic [ref=e60]:
-        - generic [ref=e61] [cursor=pointer]:
-          - img [ref=e62]
-          - generic [ref=e64]: RECOMMENDED (2)
-        - generic [ref=e65] [cursor=pointer]:
-          - img [ref=e66]
-          - generic [ref=e69]:
-            - generic [ref=e70]: ClientFlow
-            - generic [ref=e71]: Freelance management platform for client relationships and project tracking.
-            - generic [ref=e72]:
-              - generic [ref=e73]:
-                - img [ref=e74]
-                - text: "124"
-              - button "Install" [ref=e77]
-        - generic [ref=e78] [cursor=pointer]:
-          - img [ref=e79]
-          - generic [ref=e82]:
-            - generic [ref=e83]: Vera
-            - generic [ref=e84]: Modern task management application focused on simplicity and productivity.
-            - generic [ref=e85]:
-              - generic [ref=e86]:
-                - img [ref=e87]
-                - text: "89"
-              - button "Install" [ref=e90]
+      - generic [ref=e51]: EXPLORER
+      - generic [ref=e57]:
+        - generic [ref=e139] [cursor=pointer]:
+          - img [ref=e140]
+          - generic [ref=e142]: PORTFOLIO_SRC
+        - generic [ref=e143]:
+          - generic [ref=e144] [cursor=pointer]:
+            - img [ref=e145]
+            - generic [ref=e150]: about.js
+          - generic [ref=e151] [cursor=pointer]:
+            - img [ref=e152]
+            - generic [ref=e155]: skills.sh
+          - generic [ref=e156] [cursor=pointer]:
+            - img [ref=e157]
+            - generic [ref=e160]: contact.js
+          - generic [ref=e161] [cursor=pointer]:
+            - img [ref=e162]
+            - generic [ref=e167]: README.md
+          - generic [ref=e168] [cursor=pointer]:
+            - img [ref=e169]
+            - generic [ref=e172]: package.json
+          - generic [ref=e173] [cursor=pointer]:
+            - img [ref=e174]
+            - generic [ref=e177]: resume.pdf
+            - generic [ref=e178]: PDF
     - generic [ref=e92]:
-      - generic [ref=e95] [cursor=pointer]:
-        - img [ref=e96]
-        - generic [ref=e99]: about.js
-        - button "Close about.js tab" [ref=e100]:
-          - img [ref=e101]
+      - generic [ref=e94]:
+        - generic [ref=e95] [cursor=pointer]:
+          - img [ref=e96]
+          - generic [ref=e99]: about.js
+          - button "Close about.js tab" [ref=e100]:
+            - img [ref=e101]
+        - generic [ref=e179] [cursor=pointer]:
+          - img [ref=e180]
+          - generic [ref=e183]: resume.pdf
+          - button "Close resume.pdf tab" [ref=e184]:
+            - img [ref=e185]
       - generic [ref=e104]:
         - generic [ref=e105]: workspace
         - img [ref=e106]
         - generic [ref=e108]: src
         - img [ref=e109]
-        - generic [ref=e111]: about.js
-      - generic [ref=e114]:
-        - generic [ref=e115]: /** @file about.js */
-        - code [ref=e117]: "const developer = { name: \"Abhishek Sinha\", role: \"Full Stack & Mobile Developer\", status: \"Engineering secure & scalable solutions\" }; developer.connect();"
-  - generic [ref=e122]:
-    - generic [ref=e123]:
-      - generic [ref=e124]:
-        - img [ref=e125]
+        - generic [ref=e111]: resume.pdf
+      - generic [ref=e189]:
+        - generic [ref=e190]:
+          - img [ref=e191]
+          - generic [ref=e194]: Resume/Full_Stack_dev.pdf
+          - generic [ref=e195]: PDF
+        - generic [ref=e196]:
+          - button "Fullscreen" [ref=e197] [cursor=pointer]:
+            - img [ref=e198]
+            - generic [ref=e203]: Fullscreen
+          - link "Open" [ref=e204] [cursor=pointer]:
+            - /url: /Resume/Full_Stack_dev.pdf
+            - img [ref=e205]
+            - generic [ref=e209]: Open
+          - link "Download" [ref=e210] [cursor=pointer]:
+            - /url: /Resume/Full_Stack_dev.pdf
+            - img [ref=e211]
+            - generic [ref=e214]: Download
+  - generic [ref=e121]:
+    - generic [ref=e122]:
+      - generic [ref=e123]:
+        - img [ref=e124]
         - text: main*
-      - generic [ref=e129]:
-        - img [ref=e130]
+      - generic [ref=e128]:
+        - img [ref=e129]
         - text: Prettier
-    - generic [ref=e133]:
-      - generic [ref=e134]: UTF-8
-      - generic [ref=e135]:
-        - img [ref=e136]
+    - generic [ref=e132]:
+      - generic [ref=e133]: UTF-8
+      - generic [ref=e134]:
+        - img [ref=e135]
         - text: AbhiOS v4.2
-  - generic [ref=e140]:
-    - generic [ref=e142]:
-      - generic [ref=e143]:
-        - generic [ref=e144]: 👨‍💻
-        - generic [ref=e145]:
-          - generic [ref=e146]: Step 1 of 9
-          - heading "Welcome to AbhiOS 🚀" [level=3] [ref=e147]
-      - button "Close tour" [active] [ref=e148] [cursor=pointer]:
-        - img [ref=e149]
-    - paragraph [ref=e153]: My portfolio is built to look like a VS Code environment. Let's take a quick guided tour so you know how to use all the functions.
-    - generic [ref=e156]:
-      - button "Skip tour" [ref=e157] [cursor=pointer]:
-        - img [ref=e158]
-        - text: Skip tour
-      - button "Next" [ref=e161] [cursor=pointer]:
-        - text: Next
-        - img [ref=e162]
-    - generic [ref=e164]:
-      - button [ref=e165] [cursor=pointer]
-      - button [ref=e166] [cursor=pointer]
-      - button [ref=e167] [cursor=pointer]
-      - button [ref=e168] [cursor=pointer]
-      - button [ref=e169] [cursor=pointer]
-      - button [ref=e170] [cursor=pointer]
-      - button [ref=e171] [cursor=pointer]
-      - button [ref=e172] [cursor=pointer]
-      - button [ref=e173] [cursor=pointer]

@@ -22,7 +22,7 @@ const iconMap: Record<string, React.ReactNode> = {
   TerminalSquare: <Blocks size={16} className="text-[#39FF14]" />,
   Mail: <Blocks size={16} className="text-[#B026FF]" />,
   FileJson: <Blocks size={16} className="text-[#FFBD2E]" />,
-  FilePdf: <FileText size={16} className="text-[#FF5F56]" />,
+  FileText: <FileText size={16} className="text-[#FF5F56]" />,
 };
 
 const BRANCH_CONFIG: Record<string, { x: number, color: string, dim: string }> = {
@@ -61,7 +61,7 @@ export const Sidebar = ({
               <div className="flex flex-col">
                 {Object.keys(FILES).map((filename) => {
                   const file = FILES[filename] as FileConfig;
-                  const isPdf = filename === 'resume.pdf';
+                  const isPdf = file.type === 'pdf';
                   return (
                     <div 
                       key={filename} 
