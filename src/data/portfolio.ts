@@ -46,6 +46,7 @@ export const FILES: Record<string, FileConfig> = {
   'contact.js': { icon: 'Mail', type: 'js', lines: 31 },
   'README.md': { icon: 'FileCode2', type: 'md', lines: 56 },
   'package.json': { icon: 'FileJson', type: 'json', lines: 24 },
+  'resume.pdf': { icon: 'FilePdf', type: 'pdf', lines: 1 },
 };
 
 export const PROJECTS = [

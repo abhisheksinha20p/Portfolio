@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, GitBranch, FileCode2, Blocks, Search, MoreHorizontal, Settings } from 'lucide-react';
+import { ChevronDown, GitBranch, FileCode2, Blocks, Search, MoreHorizontal, Settings, FileText } from 'lucide-react';
 import { FILES, PROJECTS, TIMELINE, type FileConfig } from '../../data/portfolio';
 
 interface SidebarProps {
@@ -22,6 +22,7 @@ const iconMap: Record<string, React.ReactNode> = {
   TerminalSquare: <Blocks size={16} className="text-[#39FF14]" />,
   Mail: <Blocks size={16} className="text-[#B026FF]" />,
   FileJson: <Blocks size={16} className="text-[#FFBD2E]" />,
+  FilePdf: <FileText size={16} className="text-[#FF5F56]" />,
 };
 
 const BRANCH_CONFIG: Record<string, { x: number, color: string, dim: string }> = {
@@ -60,6 +61,7 @@ export const Sidebar = ({
               <div className="flex flex-col">
                 {Object.keys(FILES).map((filename) => {
                   const file = FILES[filename] as FileConfig;
+                  const isPdf = filename === 'resume.pdf';
                   return (
                     <div 
                       key={filename} 
@@ -67,10 +69,16 @@ export const Sidebar = ({
                       className={`flex items-center gap-2 pl-8 pr-2 py-1 text-sm cursor-pointer font-mono transition-all ${
                         activeTab === filename 
                           ? 'bg-[#00F0FF]/10 text-white border-l-2 border-[#00F0FF]' 
-                          : 'border-l-2 border-transparent text-[#64748B] hover:text-[#E2E8F0] hover:bg-white/5'
+                          : isPdf
+                            ? 'border-l-2 border-transparent text-[#FF5F56]/80 hover:text-[#FF5F56] hover:bg-[#FF5F56]/5'
+                            : 'border-l-2 border-transparent text-[#64748B] hover:text-[#E2E8F0] hover:bg-white/5'
                       }`}
                     >
-                      {iconMap[file.icon] || <FileCode2 size={16} />} <span>{filename}</span>
+                      {iconMap[file.icon] || <FileCode2 size={16} />}
+                      <span>{filename}</span>
+                      {isPdf && (
+                        <span className="ml-auto text-[9px] font-bold text-[#FF5F56]/60 bg-[#FF5F56]/10 px-1 rounded">PDF</span>
+                      )}
                     </div>
                   );
                 })}

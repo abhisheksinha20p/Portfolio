@@ -16,6 +16,7 @@ import { PackageJsonView } from '../views/PackageJsonView';
 import { ExtensionMarketplaceView } from '../views/ExtensionMarketplaceView';
 import { ProjectWorkspaceView } from '../views/ProjectWorkspaceView';
 import { CommitView } from '../views/CommitView';
+import { ResumeView } from '../views/ResumeView';
 import { OnboardingTour, useOnboardingTour } from '../ui/OnboardingTour';
 import { ChevronRight, Blocks, Search, Terminal, Bot } from 'lucide-react';
 
@@ -101,6 +102,7 @@ export const IDEWorkspace = () => {
         case 'contact.js': return <ContactView />;
         case 'README.md': return <ReadmeView />;
         case 'package.json': return <PackageJsonView />;
+        case 'resume.pdf': return <ResumeView />;
         default: return <div className="p-8 font-mono text-[#64748B]">// File content for {activeTab}</div>;
       }
     } 
