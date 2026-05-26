@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
+import { RESUME_PATH, RESUME_DOWNLOAD_FILENAME } from '../../config/constants';
 
 export const Hero = () => {
   return (
@@ -36,7 +37,7 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="mt-14"
+              className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-6"
             >
               <a 
                 href="#projects"
@@ -44,6 +45,17 @@ export const Hero = () => {
               >
                 View Selected Works
                 <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-500" />
+              </a>
+
+              <span className="hidden sm:block w-px h-4 bg-white/20" />
+
+              <a
+                href={RESUME_PATH}
+                download={RESUME_DOWNLOAD_FILENAME}
+                className="group inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors uppercase tracking-widest text-sm border border-white/10 hover:border-white/30 px-4 py-2 rounded"
+              >
+                <Download size={14} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
+                Download Resume
               </a>
             </motion.div>
           </motion.div>

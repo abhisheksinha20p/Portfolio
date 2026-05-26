@@ -39,8 +39,9 @@ export const AICopilotPanel = ({ isOpen, onClose, width }: AICopilotPanelProps) 
     try {
       const response = await chatWithAI(userMessage);
       setAiMessages(prev => [...prev, { role: 'ai', text: response }]);
-    } catch (error: any) {
-      setAiMessages(prev => [...prev, { role: 'ai', text: error.message || "Failed to get response." }]);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to get response.";
+      setAiMessages(prev => [...prev, { role: 'ai', text: errorMessage }]);
     } finally {
       setIsAiTyping(false);
     }
