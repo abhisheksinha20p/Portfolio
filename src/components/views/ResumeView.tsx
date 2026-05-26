@@ -84,7 +84,7 @@ export const ResumeView = () => {
       if (!window.pdfjsLib) {
         try {
           const script = document.createElement('script');
-          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+          script.src = '/lib/pdfjs/pdf.min.js';
           script.async = true;
           
           const scriptPromise = new Promise((resolve, reject) => {
@@ -94,10 +94,6 @@ export const ResumeView = () => {
           
           document.body.appendChild(script);
           await scriptPromise;
-
-          if (window.pdfjsLib) {
-            window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-          }
         } catch (err) {
           console.warn('PDF.js script load failed. Checking for native iframe fallback...', err);
           if (active) {
@@ -111,6 +107,10 @@ export const ResumeView = () => {
             return;
           }
         }
+      }
+
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = '/lib/pdfjs/pdf.worker.min.js';
       }
 
       // 3. Load actual PDF document using the library
