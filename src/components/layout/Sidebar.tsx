@@ -87,7 +87,7 @@ export const Sidebar = ({
           </div>
         );
 
-      case 'search':
+      case 'search': {
         const lowerQ = searchQuery.toLowerCase();
         let results: Array<{ type: string; name: string; id: string }> = [];
         if (lowerQ) {
@@ -136,6 +136,7 @@ export const Sidebar = ({
             )}
           </div>
         );
+      }
 
       case 'git': {
         const ROW_H = 90;
@@ -287,7 +288,7 @@ export const Sidebar = ({
         );
       }
 
-      case 'extensions':
+      case 'extensions': {
         const filteredP = PROJECTS.filter(p => p.name.toLowerCase().includes(extensionSearch.toLowerCase()));
         const inst = filteredP.filter(p => installedProjects.includes(p.id));
         const rec = filteredP.filter(p => !installedProjects.includes(p.id));
@@ -369,6 +370,7 @@ export const Sidebar = ({
             </div>
           </div>
         );
+      }
 
 
       default:

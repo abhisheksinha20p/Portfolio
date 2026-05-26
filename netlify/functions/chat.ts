@@ -141,11 +141,11 @@ const handler: Handler = async (event: HandlerEvent) => {
       return createResponse(400, { error: 'Request body is required' }, rateLimitStatus.remaining);
     }
     
-    let message: any;
+    let message: unknown;
     try {
       const parsed = JSON.parse(event.body);
       message = parsed.message;
-    } catch (e) {
+    } catch {
       return createResponse(400, { error: 'Invalid JSON body' }, rateLimitStatus.remaining);
     }
     
@@ -205,7 +205,7 @@ const handler: Handler = async (event: HandlerEvent) => {
       rateLimitStatus.remaining - 1
     );
     
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Serverless Function Error:', error);
     
     return createResponse(

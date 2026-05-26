@@ -36,26 +36,29 @@ export const TerminalPanel = ({ onOpenTab, onInstallProject }: TerminalPanelProp
 
     // Process commands
     switch (command) {
-      case 'help':
+      case 'help': {
         const helpOutput = TERMINAL_COMMANDS.help();
         helpOutput.forEach(line => {
           setHistory(prev => [...prev, { type: 'output', text: line, color: '#E2E8F0' }]);
         });
         break;
+      }
 
-      case 'whoami':
+      case 'whoami': {
         const whoamiOutput = TERMINAL_COMMANDS.whoami();
         whoamiOutput.forEach(line => {
           setHistory(prev => [...prev, { type: 'output', text: line, color: '#E2E8F0' }]);
         });
         break;
+      }
 
-      case 'projects':
+      case 'projects': {
         const projectsOutput = TERMINAL_COMMANDS.projects();
         projectsOutput.forEach(line => {
           setHistory(prev => [...prev, { type: 'output', text: line, color: '#39FF14' }]);
         });
         break;
+      }
 
       case 'open':
         if (args.length > 0) {
