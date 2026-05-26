@@ -2,14 +2,36 @@ import { Download, ExternalLink, FileText, Maximize2, Loader2, AlertCircle } fro
 import { useState, useEffect, useRef } from 'react';
 import { RESUME_PATH, RESUME_DOWNLOAD_FILENAME } from '../../config/constants';
 
+interface PDFPageViewport {
+  width: number;
+  height: number;
+}
+
+interface PDFPageProxy {
+  getViewport: (options: { scale: number }) => PDFPageViewport;
+  render: (options: { canvasContext: CanvasRenderingContext2D; viewport: PDFPageViewport }) => { promise: Promise<void> };
+}
+
+interface PDFDocumentProxy {
+  numPages: number;
+  getPage: (pageNum: number) => Promise<PDFPageProxy>;
+}
+
 declare global {
   interface Window {
-    pdfjsLib?: any;
+    pdfjsLib?: {
+      GlobalWorkerOptions: {
+        workerSrc: string;
+      };
+      getDocument: (url: string) => {
+        promise: Promise<PDFDocumentProxy>;
+      };
+    };
   }
 }
 
 interface PDFPageProps {
-  pdfDoc: any;
+  pdfDoc: PDFDocumentProxy;
   pageNum: number;
 }
 
@@ -67,7 +89,7 @@ export const ResumeView = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [pdfDoc, setPdfDoc] = useState<any>(null);
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
   const [numPages, setNumPages] = useState<number>(0);
   const [useIframeFallback, setUseIframeFallback] = useState(false);
 
@@ -129,14 +151,15 @@ export const ResumeView = () => {
           setNumPages(pdf.numPages);
           setLoading(false);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error loading PDF document:', err);
+        const errorMessage = err instanceof Error ? err.message : 'An error occurred while loading the PDF.';
         if (active) {
           if (hasNativePDF) {
             setUseIframeFallback(true);
             setLoading(false);
           } else {
-            setError(err.message || 'An error occurred while loading the PDF.');
+            setError(errorMessage);
             setLoading(false);
           }
         }
@@ -207,7 +230,7 @@ export const ResumeView = () => {
     return (
       <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-[#0D0D14] space-y-8">
         <div className="max-w-4xl mx-auto space-y-8">
-          {Array.from({ length: numPages }, (_, i) => (
+          {pdfDoc && Array.from({ length: numPages }, (_, i) => (
             <PDFPage key={i + 1} pdfDoc={pdfDoc} pageNum={i + 1} />
           ))}
         </div>

@@ -17,7 +17,8 @@ import { ExtensionMarketplaceView } from '../views/ExtensionMarketplaceView';
 import { ProjectWorkspaceView } from '../views/ProjectWorkspaceView';
 import { CommitView } from '../views/CommitView';
 import { ResumeView } from '../views/ResumeView';
-import { OnboardingTour, useOnboardingTour } from '../ui/OnboardingTour';
+import { OnboardingTour } from '../ui/OnboardingTour';
+import { useOnboardingTour } from '../../hooks/useOnboardingTour';
 import { ChevronRight, Blocks, Search, Terminal, Bot } from 'lucide-react';
 
 export const IDEWorkspace = () => {

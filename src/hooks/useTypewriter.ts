@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 
 export const useTypewriter = (text: string, speed = 30) => {
+  const [prevText, setPrevText] = useState(text);
   const [displayedText, setDisplayedText] = useState('');
+
+  if (text !== prevText) {
+    setPrevText(text);
+    setDisplayedText('');
+  }
   
   useEffect(() => {
-    setDisplayedText('');
-    
     const timer = setInterval(() => {
       setDisplayedText(prev => {
         if (prev.length < text.length) {

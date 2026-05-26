@@ -91,14 +91,17 @@ export const chatWithAI = async (message: string): Promise<string> => {
     incrementUsage();
     
     return sanitizedResponse;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('AI Chat Error:', error);
     
-    if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      throw new Error('Network error. Please check your connection and try again.');
+    if (error instanceof Error) {
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new Error('Network error. Please check your connection and try again.');
+      }
+      throw error;
     }
     
-    throw error;
+    throw new Error('An unexpected error occurred.');
   }
 };
 

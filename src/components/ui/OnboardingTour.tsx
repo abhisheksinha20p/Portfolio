@@ -88,32 +88,6 @@ interface OnboardingTourProps {
   onComplete: () => void;
 }
 
-const STORAGE_KEY = 'abhios_tour_v2';
-
-export const useOnboardingTour = () => {
-  const [shouldShow, setShouldShow] = useState(false);
-
-  useEffect(() => {
-    const done = localStorage.getItem(STORAGE_KEY);
-    if (!done) {
-      const t = setTimeout(() => setShouldShow(true), 800);
-      return () => clearTimeout(t);
-    }
-  }, []);
-
-  const markComplete = useCallback(() => {
-    localStorage.setItem(STORAGE_KEY, 'true');
-    setShouldShow(false);
-  }, []);
-
-  const resetTour = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    setShouldShow(true);
-  }, []);
-
-  return { shouldShow, markComplete, resetTour };
-};
-
 export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
   const [step, setStep] = useState(0);
   const [visible, setVisible] = useState(false);
