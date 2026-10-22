@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { ArrowUpRight, Github, Linkedin, Mail, FileText, Globe } from 'lucide-react';
-import { PROFILE, PROJECTS, EXPERIENCE, SKILLS, IDEAS } from './data/portfolio';
+import { ArrowUpRight, Github, Linkedin, Mail, FileText, Globe, PenLine } from 'lucide-react';
+import { PROFILE, PROJECTS, EXPERIENCE, SKILLS, IDEAS, EDUCATION, CERTIFICATIONS } from './data/portfolio';
 import { Contact } from './Contact';
 import { DeviceScene } from './DeviceScene';
 
@@ -135,10 +135,21 @@ export default function App() {
           <div className="grid lg:grid-cols-12 gap-16">
             <div className="lg:col-span-5">
               <p className="font-serif text-3xl leading-snug">{PROFILE.summary}</p>
+              <div className="reveal mt-12 space-y-6 text-[15px]">
+                <div>
+                  <p className="label mb-2">Education</p>
+                  <p className="font-medium">{EDUCATION.degree}</p>
+                  <p className="text-muted">{EDUCATION.school} · {EDUCATION.period}</p>
+                </div>
+                <div>
+                  <p className="label mb-2">Certifications</p>
+                  <ul className="space-y-1 text-muted">{CERTIFICATIONS.map((c) => <li key={c}>{c}</li>)}</ul>
+                </div>
+              </div>
             </div>
             <ol className="lg:col-span-7 space-y-12">
               {EXPERIENCE.map((j) => (
-                <li key={j.title} className="reveal grid sm:grid-cols-[10rem_1fr] gap-2 sm:gap-8">
+                <li key={j.title + j.period} className="reveal grid sm:grid-cols-[10rem_1fr] gap-2 sm:gap-8">
                   <p className="label pt-1">{j.period}</p>
                   <div>
                     <h3 className="text-xl font-medium">{j.title}</h3>
@@ -186,6 +197,7 @@ export default function App() {
               <li><a href={`mailto:${PROFILE.email}`} className="link inline-flex items-center gap-2"><Mail size={16} aria-hidden /> {PROFILE.email}</a></li>
               <li><ExtLink href={PROFILE.linkedin}><Linkedin size={16} aria-hidden /> LinkedIn</ExtLink></li>
               <li><ExtLink href={PROFILE.github}><Github size={16} aria-hidden /> GitHub</ExtLink></li>
+              <li><ExtLink href={PROFILE.blog}><PenLine size={16} aria-hidden /> Blog — mycodeyatra.com</ExtLink></li>
             </ul>
           </div>
           <div className="lg:col-span-7"><Contact /></div>

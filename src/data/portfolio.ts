@@ -5,12 +5,13 @@ export const PROFILE = {
   role: 'Web & Mobile Engineer',
   headline: 'I build secure, fast products — from the API to the app in your pocket.',
   summary:
-    'Full-stack and mobile engineer working across React, React Native and Node.js. I care about the parts users never see — auth, data models, deploys — as much as the parts they do. Most recently shipping fintech features at Tech Signific.',
-  location: 'India · Open to remote',
+    'Full-stack and mobile engineer who enjoys both sides of the stack — smooth interfaces and the reliable systems behind them. Currently an Associate Frontline Deployment Engineer at Tech Signific, taking software from requirements to production.',
+  location: 'Jamshedpur, India · Open to remote',
   status: 'Open to new roles',
   email: 'abhisheksinha20009k@gmail.com',
   github: 'https://github.com/abhisheksinha20p',
   linkedin: 'https://www.linkedin.com/in/abhishek-sinha-0897aa23b',
+  blog: 'https://mycodeyatra.com',
   resume: '/Resume/Full_Stack_dev.pdf',
 };
 
@@ -70,13 +71,24 @@ export type Job = { company: string; title: string; period: string; points: stri
 export const EXPERIENCE: Job[] = [
   {
     company: 'Tech Signific',
-    title: 'Full-Stack & Mobile Developer',
-    period: 'Oct 2025 — Present',
+    title: 'Associate Frontline Deployment Engineer',
+    period: 'Jun 2026 — Present',
     points: [
-      'Build fintech features in React Native backed by Node.js services',
-      'Implemented JWT authentication and granular role-based access control',
-      'Designed MongoDB schemas for transaction-heavy workloads',
-      'Ship services as Docker containers',
+      'Own work across the lifecycle, from requirement analysis to production deployment',
+      'Troubleshoot and optimise live applications for performance',
+      'Write technical documentation and support release activities',
+      'Collaborate with cross-functional teams to ship reliable software',
+    ],
+  },
+  {
+    company: 'Tech Signific',
+    title: 'Full-Stack & Mobile Developer (Freelance)',
+    period: 'Oct 2025 — May 2026',
+    points: [
+      'Built fintech mobile apps with a focus on UX and secure integrations',
+      'Led the architecture of a Node.js + MongoDB backend serving web and mobile',
+      'Ran production environments with Docker for consistent deploys',
+      'Implemented JWT-based authentication across applications',
     ],
   },
   {
@@ -84,11 +96,22 @@ export const EXPERIENCE: Job[] = [
     title: 'Full-Stack Developer Intern',
     period: 'Jan 2025 — Jul 2025',
     points: [
-      'Built REST APIs and optimised SQL / NoSQL queries',
-      'Created a reusable UI component library',
-      'Worked in an Agile team with Git-based CI/CD',
+      'Developed server-side logic and REST APIs in Node.js',
+      'Built responsive interfaces with HTML, CSS and vanilla JavaScript',
+      'Worked in Agile sprints with planning and code reviews',
     ],
   },
+];
+
+export const EDUCATION = {
+  degree: 'B.E. Electronics & Communication Engineering',
+  school: 'KLS Gogte Institute of Technology, Belagavi',
+  period: '2020 — 2024',
+};
+
+export const CERTIFICATIONS = [
+  'Google Data Analytics — Foundations, Ask Questions, Prepare Data, Process Data',
+  'Tata Group — Data Visualisation Job Simulation',
 ];
 
 export const SKILLS: { group: string; items: string[] }[] = [

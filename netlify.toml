@@ -1,0 +1,11 @@
+# The site lives on Vercel. This keeps old links (e.g. LinkedIn) to
+# abhisheksinha.netlify.app working by permanently redirecting them.
+[build]
+  command = "true"
+  publish = "public"
+
+[[redirects]]
+  from = "/*"
+  to = "https://portfolio-flame-seven-61.vercel.app/:splat"
+  status = 301
+  force = true
