@@ -61,7 +61,7 @@ export const PROJECTS: Project[] = [
       'Custom component system with accessibility built in',
     ],
     stack: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Docker'],
-    live: 'https://vera.solutionss.in/',
+    live: 'https://vera-steel-eight.vercel.app/',
     github: 'https://github.com/abhisheksinha20p/Vera',
   },
 ];
