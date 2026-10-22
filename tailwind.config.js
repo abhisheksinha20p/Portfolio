@@ -1,30 +1,17 @@
 /** @type {import('tailwindcss').Config} */
+const v = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 export default {
-  darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      colors: {
-        background: '#050505', // Deepest black
-        surface: '#0A0A0A',    // Very dark gray
-        primary: '#E0E0E0',    // Silver/White
-        secondary: '#A0A0A0',  // Muted Gray
-        accent: '#303030',     // Dark accent
-        text: '#F5F6F8',
-        muted: '#666666',
-        glass: 'rgba(255, 255, 255, 0.03)',
-      },
+      colors: { paper: v('paper'), ink: v('ink'), muted: v('muted'), line: v('line'), accent: v('accent') },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['"Playfair Display"', 'serif'],
-      },
-      backgroundImage: {
-        'noise': "url('/noise.png')", // We will use CSS for this instead
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
     },
   },
   plugins: [],
-}
+};
