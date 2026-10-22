@@ -1,8 +1,14 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { ArrowUpRight, Github, Linkedin, Mail, FileText, Globe } from 'lucide-react';
 import { PROFILE, PROJECTS, EXPERIENCE, SKILLS, IDEAS } from './data/portfolio';
 import { Contact } from './Contact';
 import { DeviceScene } from './DeviceScene';
+
+// If the 3D chunk fails to load (e.g. stale cache after a deploy), fall back to the CSS scene.
+const Scene3D = lazy(() => import('./Scene3D').catch(() => ({ default: DeviceScene })));
+const hasWebGL = (() => {
+  try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; }
+})();
 
 const NAV = ['Work', 'Experience', 'Ideas', 'Contact'];
 
@@ -62,7 +68,11 @@ export default function App() {
               </a>
             </div>
           </div>
-          <DeviceScene />
+          {hasWebGL ? (
+            <Suspense fallback={<DeviceScene />}><Scene3D /></Suspense>
+          ) : (
+            <DeviceScene />
+          )}
         </section>
 
         {/* Work */}
