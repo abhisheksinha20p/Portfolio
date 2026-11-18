@@ -49,20 +49,20 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'Vera',
-    year: '2025',
-    tagline: 'A calm, focused task manager',
-    image: '/img/vera_app.png',
+    year: '2026',
+    tagline: 'A calm daily planner, live on Google Play',
+    image: '/img/vera-portfolio-hero.png',
     problem:
-      'Most task apps become another source of noise. Vera is built around a single focus dashboard that shows only what matters today.',
-    role: 'Solo — product, UI and full-stack build',
+      'Most task apps turn into another source of noise. Vera shows only what matters today: tasks, daily habits with streaks and reminders that fire at the exact time you chose.',
+    role: 'Solo — product, design, mobile app, backend, infrastructure and Play Store launch',
     built: [
-      'Secure authentication and per-user data',
-      'Focus dashboard with offline-friendly client state',
-      'Custom component system with accessibility built in',
+      'Android app in React Native and Expo with a local-first Today view, daily habits and streaks, exact-time reminders and voice typing',
+      'Microservice backend (gateway, auth, tasks, calendar, billing, admin) with gRPC, Kafka, Redis and one MongoDB database per service',
+      'Email sign-in with one-time codes, a role-based admin console and Google Play Billing for an optional subscription',
+      'Production on Docker with HTTPS (Let’s Encrypt), CI-built signed Android bundles and an ad-free, privacy-first design',
     ],
-    stack: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Docker'],
-    live: 'https://vera-steel-eight.vercel.app/',
-    github: 'https://github.com/abhisheksinha20p/Vera',
+    stack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'gRPC', 'Kafka', 'Redis', 'MongoDB', 'Docker', 'GitHub Actions'],
+    live: 'https://play.google.com/store/apps/details?id=in.solution.vera',
   },
 ];
 

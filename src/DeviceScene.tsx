@@ -30,21 +30,7 @@ export const DeviceScene = () => {
 
         <div className="phone-pos">
           <div className="phone">
-            <div className="phone-screen">
-              <p className="flex justify-between text-[0.55em] opacity-60"><span>9:41</span><span>●●●</span></p>
-              <p className="text-[0.6em] opacity-60 mt-[1.2em]">Total balance</p>
-              <p className="font-serif text-[1.6em] leading-none">₹2,48,300</p>
-              <div className="flex items-end gap-[3%] h-[18%] mt-[1em]">
-                {[40, 65, 50, 80, 60, 95, 75].map((h, i) => (
-                  <span key={i} className="flex-1 rounded-sm bg-accent" style={{ height: `${h}%`, opacity: 0.35 + i * 0.09 }} />
-                ))}
-              </div>
-              <ul className="mt-[1.2em] space-y-[0.7em] text-[0.55em]">
-                {[['Stripe payout', '+12,400'], ['Cloud hosting', '−1,850'], ['Client: Acme', '+38,000']].map(([l, a]) => (
-                  <li key={l} className="flex justify-between border-b border-line pb-[0.5em]"><span>{l}</span><span>{a}</span></li>
-                ))}
-              </ul>
-            </div>
+            <img src="/img/vera-screen-today.png" alt="" className="w-full h-full object-cover" />
           </div>
         </div>
 

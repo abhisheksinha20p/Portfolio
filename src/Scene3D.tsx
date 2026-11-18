@@ -5,29 +5,8 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { PROJECTS } from './data/portfolio';
 
-// Phone screen is drawn on a 2D canvas so it stays crisp and needs no extra assets.
-const drawPhoneScreen = () => {
-  const c = document.createElement('canvas');
-  c.width = 540; c.height = 1140;
-  const g = c.getContext('2d')!;
-  g.fillStyle = '#F6F3ED'; g.fillRect(0, 0, c.width, c.height);
-  g.fillStyle = '#161513';
-  g.font = '500 30px Inter, sans-serif'; g.fillText('9:41', 50, 80);
-  g.globalAlpha = 0.55; g.font = '400 30px Inter, sans-serif'; g.fillText('Total balance', 50, 200);
-  g.globalAlpha = 1; g.font = '96px "Instrument Serif", Georgia, serif'; g.fillText('₹2,48,300', 46, 300);
-  [40, 65, 50, 80, 60, 95, 75].forEach((h, i) => {
-    g.fillStyle = `rgba(194,65,12,${0.35 + i * 0.09})`;
-    g.fillRect(50 + i * 64, 560 - h * 2.2, 48, h * 2.2);
-  });
-  g.font = '400 30px Inter, sans-serif';
-  [['Stripe payout', '+12,400'], ['Cloud hosting', '−1,850'], ['Client: Acme', '+38,000'], ['Salary', '+95,000']].forEach(([l, a], i) => {
-    const y = 680 + i * 100;
-    g.fillStyle = '#161513'; g.fillText(l, 50, y);
-    g.textAlign = 'right'; g.fillText(a, 490, y); g.textAlign = 'left';
-    g.fillStyle = '#DED8CE'; g.fillRect(50, y + 30, 440, 2);
-  });
-  return c;
-};
+// Real Vera app screens, shown on the phone in rotation.
+const PHONE_SCREENS = ['/img/vera-screen-today.png', '/img/vera-screen-tasks.png'];
 
 const shadowTexture = () => {
   const c = document.createElement('canvas');
@@ -94,15 +73,21 @@ export default function Scene3D() {
     // Phone
     const phone = new THREE.Group();
     const phoneBody = new THREE.Mesh(new RoundedBoxGeometry(0.95, 1.95, 0.09, 6, 0.12), graphite);
-    const phoneTex = new THREE.CanvasTexture(drawPhoneScreen());
-    phoneTex.colorSpace = THREE.SRGBColorSpace;
-    const phoneScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.86, 1.82), new THREE.MeshBasicMaterial({ map: phoneTex, toneMapped: false }));
+    const phoneTexes = PHONE_SCREENS.map((src) => {
+      const t = loader.load(src);
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = 8;
+      return t;
+    });
+    const phoneMat = new THREE.MeshBasicMaterial({ map: phoneTexes[0], transparent: true, toneMapped: false });
+    const phoneScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.84, 1.876), phoneMat);
     phoneScreen.position.z = 0.047;
     phone.add(phoneBody, phoneScreen);
     phone.position.set(1.95, 1.05, 0.9);
     phone.rotation.set(-0.05, -0.4, 0.04);
     scene.add(phone);
-    document.fonts.ready.then(() => { phoneTex.image = drawPhoneScreen(); phoneTex.needsUpdate = true; });
+    let shown = 0;
+    const cycle = setInterval(() => { shown = (shown + 1) % phoneTexes.length; phoneMat.map = phoneTexes[shown]; }, 3500);
 
     const shadow = new THREE.Mesh(new THREE.PlaneGeometry(6, 4), new THREE.MeshBasicMaterial({ map: shadowTexture(), transparent: true, depthWrite: false }));
     shadow.rotation.x = -Math.PI / 2; shadow.position.set(0.4, -0.06, 0.2);
@@ -149,6 +134,7 @@ export default function Scene3D() {
 
     return () => {
       renderer.setAnimationLoop(null);
+      clearInterval(cycle);
       ro.disconnect(); io.disconnect(); controls.dispose(); pmrem.dispose();
       scene.traverse((o) => {
         if (o instanceof THREE.Mesh) {
@@ -157,6 +143,7 @@ export default function Scene3D() {
           m.map?.dispose(); m.dispose();
         }
       });
+      phoneTexes.forEach((t) => t.dispose());
       renderer.dispose();
       el.removeChild(renderer.domElement);
     };
@@ -167,7 +154,7 @@ export default function Scene3D() {
       ref={host}
       className="relative w-full min-w-0 aspect-[4/3] cursor-grab active:cursor-grabbing rise"
       role="img"
-      aria-label="3D laptop and phone showing web and mobile apps I've built"
+      aria-label="3D laptop showing ClientFlow and phone showing the Vera app"
     />
   );
 }
