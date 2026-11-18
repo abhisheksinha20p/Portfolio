@@ -46,7 +46,7 @@ export default function App() {
               <li key={s}><a href={`#${s.toLowerCase()}`} className="link">{s}</a></li>
             ))}
           </ul>
-          <a href={PROFILE.resume} target="_blank" rel="noopener noreferrer" className="btn-ghost text-sm">Résumé</a>
+          <a href={PROFILE.resume} target="_blank" rel="noopener noreferrer" className="btn-ghost text-sm">Resume</a>
         </nav>
       </header>
 
@@ -64,7 +64,7 @@ export default function App() {
             <div className="mt-12 flex flex-wrap gap-4 rise" style={{ animationDelay: '.2s' }}>
               <a href="#work" className="btn">See selected work</a>
               <a href={PROFILE.resume} download="Abhishek_Sinha_Resume.pdf" className="btn-ghost inline-flex items-center gap-2">
-                <FileText size={16} aria-hidden /> Download résumé
+                <FileText size={16} aria-hidden /> Download resume
               </a>
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function App() {
                   <div className="flex flex-wrap gap-3 mt-8">
                     {p.live && (
                       <a href={p.live} target="_blank" rel="noopener noreferrer" className="btn">
-                        <Globe size={16} aria-hidden className="mr-2" /> Visit live site
+                        <Globe size={16} aria-hidden className="mr-2" /> {p.live.includes('play.google.com') ? 'Get it on Google Play' : 'Visit live site'}
                       </a>
                     )}
                     {p.github && (

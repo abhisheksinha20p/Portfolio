@@ -4,7 +4,7 @@ Static, single-page portfolio. React 19 + Vite + Tailwind, deployed on Vercel.
 
 ## Edit content
 Everything (profile, projects, experience, skills, ideas) lives in [`src/data/portfolio.ts`](src/data/portfolio.ts).
-Résumé: replace `public/Resume/Full_Stack_dev.pdf`. Project screenshots: `public/img/`.
+Resume: replace `public/Resume/Full_Stack_dev.pdf`. Project screenshots: `public/img/`.
 
 ## Run
 ```bash
