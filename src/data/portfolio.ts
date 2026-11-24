@@ -27,28 +27,11 @@ export type Project = {
   stack: string[];
   live?: string;
   website?: string;
+  tint: string; // RGB triplet used for the project's glow
   github?: string;
 };
 
 export const PROJECTS: Project[] = [
-  {
-    name: 'ClientFlow',
-    year: '2025',
-    tagline: 'Client portal and invoicing for freelancers',
-    image: '/img/clientflow.png',
-    problem:
-      'Freelancers juggle clients across email, spreadsheets and payment apps. ClientFlow puts projects, files and invoices in one place — with a separate, secure portal for each client.',
-    role: 'Solo — design, frontend, backend, deployment',
-    built: [
-      'Dual portal (freelancer + client) with role-based access control',
-      'Multi-tenant data model that keeps every client’s data isolated',
-      'Stripe integration for invoicing and payouts',
-      'Dockerised stack for identical dev and production environments',
-    ],
-    stack: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Docker'],
-    live: 'https://client-flow-teal.vercel.app/',
-    github: 'https://github.com/abhisheksinha20p/ClientFlow',
-  },
   {
     name: 'Vera',
     year: '2026',
@@ -66,6 +49,26 @@ export const PROJECTS: Project[] = [
     stack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'gRPC', 'Kafka', 'Redis', 'MongoDB', 'Docker', 'GitHub Actions'],
     live: 'https://play.google.com/store/apps/details?id=in.solution.vera',
     website: 'https://vera.solutionss.in/',
+    tint: '20 184 166',
+  },
+  {
+    name: 'ClientFlow',
+    year: '2025',
+    tagline: 'Client portal and invoicing for freelancers',
+    image: '/img/clientflow.png',
+    problem:
+      'Freelancers juggle clients across email, spreadsheets and payment apps. ClientFlow puts projects, files and invoices in one place — with a separate, secure portal for each client.',
+    role: 'Solo — design, frontend, backend, deployment',
+    built: [
+      'Dual portal (freelancer + client) with role-based access control',
+      'Multi-tenant data model that keeps every client’s data isolated',
+      'Stripe integration for invoicing and payouts',
+      'Dockerised stack for identical dev and production environments',
+    ],
+    stack: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Docker'],
+    live: 'https://client-flow-teal.vercel.app/',
+    github: 'https://github.com/abhisheksinha20p/ClientFlow',
+    tint: '59 130 246',
   },
 ];
 

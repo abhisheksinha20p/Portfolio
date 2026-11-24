@@ -5,7 +5,7 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      colors: { paper: v('paper'), ink: v('ink'), muted: v('muted'), line: v('line'), accent: v('accent') },
+      colors: { paper: v('paper'), surface: v('surface'), ink: v('ink'), muted: v('muted'), line: v('line'), accent: v('accent') },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],

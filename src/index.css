@@ -3,20 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --paper: 246 243 237;
-  --ink: 22 21 19;
-  --muted: 110 105 98;
-  --line: 222 216 206;
+  --paper: 247 245 241;
+  --surface: 255 255 255;
+  --ink: 20 19 18;
+  --muted: 104 100 94;
+  --line: 228 224 216;
   --accent: 194 65 12;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: 18 17 16;
-    --ink: 236 232 225;
-    --muted: 150 144 135;
-    --line: 44 42 39;
+    --paper: 12 12 13;
+    --surface: 22 22 24;
+    --ink: 237 235 230;
+    --muted: 152 148 141;
+    --line: 40 40 43;
     --accent: 251 146 60;
     color-scheme: dark;
   }
@@ -36,67 +38,91 @@
   }
 }
 
-@keyframes rise { from { opacity: 0; transform: translateY(32px); } }
-@keyframes float { 50% { translate: 0 -12px; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-6px) scale(0.97); filter: blur(4px); } }
+
+/* Page transitions (View Transitions API): the header stays put, the page lifts out and the next one rises in. */
+header { view-transition-name: site-header; }
+::view-transition-old(root) { animation: page-out 150ms ease-in both; }
+::view-transition-new(root) { animation: page-in 320ms cubic-bezier(0.2, 0, 0, 1) both; }
+@keyframes page-out { to { opacity: 0; transform: translateY(-12px); filter: blur(4px); } }
+@keyframes page-in { from { opacity: 0; transform: translateY(12px); filter: blur(4px); } }
 
 @layer components {
-  .wrap { @apply mx-auto max-w-7xl px-4 sm:px-8; }
-  .label { @apply font-mono text-xs uppercase tracking-[0.14em] text-muted; }
+  .wrap { @apply mx-auto max-w-6xl px-4 sm:px-8; }
+  .page { @apply relative py-16 sm:py-24; }
+  .eyebrow { @apply font-mono text-xs uppercase tracking-[0.16em] text-muted; }
+  .title { @apply font-serif text-[clamp(2.5rem,5.5vw,4.25rem)] leading-[1] tracking-tight; }
   .link { @apply underline decoration-line underline-offset-4 transition-colors hover:decoration-accent hover:text-accent; }
-  .chip { @apply font-mono text-xs border border-line rounded-full px-3 py-1; }
+  .chip { @apply font-mono text-[11px] rounded-full border border-line bg-surface/60 px-3 py-1; }
+  .card { @apply rounded-3xl border border-line bg-surface; }
+
   .btn {
-    @apply inline-flex items-center rounded-full bg-ink text-paper px-6 py-3 text-sm font-medium
+    @apply inline-flex items-center gap-2 rounded-full bg-ink text-paper px-6 py-3 text-sm font-medium
       transition-transform hover:-translate-y-0.5 active:scale-[0.97] disabled:opacity-60;
   }
   .btn-ghost {
-    @apply rounded-full border border-ink/25 px-5 py-2.5 transition-colors hover:border-accent hover:text-accent;
+    @apply inline-flex items-center gap-2 rounded-full border border-line bg-surface/50 px-5 py-3 text-sm
+      transition-colors hover:border-accent hover:text-accent;
   }
-  .dot { @apply inline-block w-2 h-2 rounded-full bg-emerald-500; box-shadow: 0 0 0 4px rgb(16 185 129 / 0.18); }
-  .shot { @apply block overflow-hidden rounded-xl border border-line bg-line self-start; }
-  .shot img { @apply w-full h-auto transition-transform duration-700 ease-out; }
-  .shot:hover img { transform: scale(1.03); }
+
+  /* Navigation */
+  .nav-link { @apply relative z-[1] block rounded-full px-4 py-2 text-sm text-muted transition-colors duration-300 hover:text-ink; }
+  .nav-link[aria-current='page'] { @apply text-ink; }
+  .nav-indicator { @apply absolute bottom-1 left-0 top-1 rounded-full bg-ink/[0.08]; }
+  .nav-indicator.is-ready {
+    transition: transform 300ms cubic-bezier(0.2, 0, 0, 1), width 300ms cubic-bezier(0.2, 0, 0, 1), opacity 200ms ease;
+  }
+
+  /* Mobile menu: panel eases in; menu icon cross-fades to a close icon */
+  .menu[open] > ul { animation: menu-in 200ms cubic-bezier(0.2, 0, 0, 1) both; transform-origin: top right; }
+  .menu-open, .menu-close { transition: opacity 300ms, scale 300ms, filter 300ms; transition-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+  .menu-close { opacity: 0; scale: 0.25; filter: blur(4px); }
+  .menu[open] .menu-open { opacity: 0; scale: 0.25; filter: blur(4px); }
+  .menu[open] .menu-close { opacity: 1; scale: 1; filter: blur(0); }
+  .icon-btn {
+    @apply flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface/60
+      transition-colors hover:border-accent hover:text-accent;
+  }
+
+  /* Soft colour glow behind a section; colour comes from --tint */
+  .glow {
+    position: absolute; pointer-events: none; border-radius: 9999px; filter: blur(80px);
+    background: rgb(var(--tint, var(--accent)) / 0.22);
+  }
+
+  /* Scroll-linked motion. --p comes from useScrollMotion on the [data-motion] wrapper:
+     items drift and tilt while travelling, and settle at --rot when centred. */
+  .drift {
+    transform:
+      translate3d(0, calc(var(--p, 0) * var(--depth, 1) * 70px), 0)
+      rotate(calc(var(--rot, 0deg) + var(--p, 0) * var(--spin, 6deg)));
+    will-change: transform;
+  }
+  .drift-text { transform: translate3d(0, calc(var(--p, 0) * 28px), 0); }
+
+  /* Device-style frames for real screenshots */
+  .phone {
+    @apply overflow-hidden rounded-[2.4rem] border-[7px] border-[#0d0d0f] bg-[#0d0d0f]
+      shadow-[0_30px_60px_-15px_rgb(0_0_0/0.45)];
+  }
+  .phone img { @apply block w-full h-auto rounded-[1.9rem]; }
+  .frame {
+    @apply overflow-hidden rounded-2xl border border-line bg-surface
+      shadow-[0_30px_60px_-20px_rgb(0_0_0/0.35)];
+  }
+  .frame img { @apply block w-full h-auto; }
+
   .field { @apply flex flex-col gap-2; }
   .field input, .field textarea {
     @apply bg-transparent border-b border-line py-2 text-base outline-none transition-colors resize-none focus:border-accent;
   }
-  .btn-sm { @apply inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm transition-colors hover:border-accent hover:text-accent; }
+  .label { @apply font-mono text-xs uppercase tracking-[0.14em] text-muted; }
 
   /* Entrance + scroll reveal */
-  .rise { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) both; }
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .rise { animation: rise 0.6s cubic-bezier(0.2, 0, 0, 1) both; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
-
-  /* 3D device scene */
-  .scene { perspective: 1600px; @apply w-full max-w-xl mx-auto py-10; }
-  .stage {
-    --rx: 24deg; --ry: -20deg;
-    position: relative; transform-style: preserve-3d;
-    transform: rotateX(var(--rx)) rotateY(var(--ry));
-    transition: transform .5s cubic-bezier(.2,.7,.2,1);
-  }
-  .laptop { position: relative; width: 82%; transform-style: preserve-3d; }
-  .lid {
-    aspect-ratio: 16 / 10; padding: 2.5%; border-radius: 12px 12px 4px 4px;
-    background: #1b1a19; box-shadow: inset 0 0 0 1px #3a3835;
-  }
-  .lid img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 4px; }
-  .base {
-    position: absolute; top: 100%; left: -7%; width: 114%; height: 62%;
-    transform-origin: top; transform: rotateX(90deg);
-    border-radius: 0 0 14px 14px;
-    background: linear-gradient(#d6d1c8, #bdb7ad);
-    box-shadow: 0 40px 60px rgb(0 0 0 / .25);
-  }
-  .phone-pos { position: absolute; right: 0; bottom: -18%; width: 30%; transform: translateZ(120px) rotateY(8deg); transform-style: preserve-3d; }
-  .phone {
-    aspect-ratio: 9 / 19; padding: 6%; border-radius: 2.2rem; background: #1b1a19;
-    box-shadow: inset 0 0 0 1px #3a3835, 0 30px 50px rgb(0 0 0 / .3);
-    animation: float 6s ease-in-out infinite;
-  }
-  .phone-screen { @apply bg-paper text-ink h-full overflow-hidden; border-radius: 1.7rem; padding: 14% 10%; font-size: clamp(9px, 1.6vw, 14px); }
-  .float-chip { position: absolute; transform: translateZ(var(--z)); @apply bg-paper shadow-lg; animation: float 7s ease-in-out infinite; }
-  .float-chip:nth-of-type(2) { animation-delay: -2s; }
-  .float-chip:nth-of-type(3) { animation-delay: -4s; }
 
   .skip { @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-ink focus:text-paper focus:px-4 focus:py-2 focus:rounded; }
 }
