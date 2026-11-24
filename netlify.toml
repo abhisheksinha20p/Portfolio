@@ -6,6 +6,6 @@
 
 [[redirects]]
   from = "/*"
-  to = "https://portfolio-flame-seven-61.vercel.app/:splat"
+  to = "https://portfolio.solutionss.in/:splat"
   status = 301
   force = true
