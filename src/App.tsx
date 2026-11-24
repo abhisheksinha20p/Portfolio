@@ -1,212 +1,89 @@
-import { lazy, Suspense, useEffect } from 'react';
-import { ArrowUpRight, Github, Linkedin, Mail, FileText, Globe, PenLine } from 'lucide-react';
-import { PROFILE, PROJECTS, EXPERIENCE, SKILLS, IDEAS, EDUCATION, CERTIFICATIONS } from './data/portfolio';
-import { Contact } from './Contact';
-import { DeviceScene } from './DeviceScene';
+import { useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import { PROFILE } from './data/portfolio';
+import { Link } from './Link';
+import { usePath } from './router';
+import { useScrollMotion } from './useScrollMotion';
+import { NavBar } from './NavBar';
+import { Home, Work, Experience, Skills, Ideas, Resume, ContactPage, NotFound } from './pages';
 
-// If the 3D chunk fails to load (e.g. stale cache after a deploy), fall back to the CSS scene.
-const Scene3D = lazy(() => import('./Scene3D').catch(() => ({ default: DeviceScene })));
-const hasWebGL = (() => {
-  try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; }
-})();
+const ROUTES: Record<string, { title: string; Page: () => React.JSX.Element }> = {
+  '/': { title: 'Home', Page: Home },
+  '/work': { title: 'Work', Page: Work },
+  '/experience': { title: 'Experience', Page: Experience },
+  '/skills': { title: 'Skills', Page: Skills },
+  '/ideas': { title: 'Ideas', Page: Ideas },
+  '/resume': { title: 'Resume', Page: Resume },
+  '/contact': { title: 'Contact', Page: ContactPage },
+};
 
-const NAV = ['Work', 'Experience', 'Ideas', 'Contact'];
-
-const Label = ({ n, children }: { n: string; children: string }) => (
-  <p className="label mb-10">
-    <span className="text-accent">{n}</span> — {children}
-  </p>
-);
-
-const ExtLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
-    {children} <ArrowUpRight size={14} aria-hidden />
-  </a>
-);
+const NAV = ['/', '/work', '/experience', '/skills', '/ideas', '/resume'];
+const BASE_TITLE = document.title;
 
 export default function App() {
+  const path = usePath();
+  const route = ROUTES[path];
+  const Page = route?.Page ?? NotFound;
+
+  useScrollMotion(path);
+
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))),
-      { threshold: 0.12 },
-    );
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+    document.title = !route ? `Not found · ${PROFILE.name}` : path === '/' ? BASE_TITLE : `${route.title} · ${PROFILE.name}`;
+  }, [path, route]);
+
+  const navLink = (to: string, className: string) => (
+    <Link to={to} className={className} aria-current={path === to ? 'page' : undefined}>
+      {ROUTES[to].title}
+    </Link>
+  );
 
   return (
     <>
-      <a href="#work" className="skip">Skip to content</a>
+      <a href="#main" className="skip">Skip to content</a>
 
-      <header className="sticky top-0 z-10 bg-paper/85 backdrop-blur border-b border-line">
-        <nav className="wrap flex items-center justify-between h-16">
-          <a href="#top" className="font-serif text-xl">Abhishek Sinha</a>
-          <ul className="hidden sm:flex gap-8 text-sm">
-            {NAV.map((s) => (
-              <li key={s}><a href={`#${s.toLowerCase()}`} className="link">{s}</a></li>
-            ))}
-          </ul>
-          <a href={PROFILE.resume} target="_blank" rel="noopener noreferrer" className="btn-ghost text-sm">Resume</a>
+      {/* Solid, blurred bar that sits above the content (sticky, so it never overlaps the page top). */}
+      <header className="sticky top-0 z-30 border-b border-line bg-paper/90 backdrop-blur-md">
+        <nav className="wrap flex h-16 items-center justify-between gap-4" aria-label="Main">
+          <Link to="/" className="font-display text-xl font-extrabold tracking-tight">{PROFILE.name}</Link>
+
+          <NavBar path={path} items={NAV.map((to) => ({ to, label: ROUTES[to].title }))} />
+
+          <div className="flex items-center gap-2">
+            <Link to="/contact" className="btn hidden !py-2 sm:inline-flex" aria-current={path === '/contact' ? 'page' : undefined}>
+              Contact
+            </Link>
+            {/* Mobile menu: native <details>, closed again after a pick */}
+            <details className="menu relative lg:hidden">
+              <summary className="icon-btn cursor-pointer list-none" aria-label="Open menu">
+                <span className="relative grid place-items-center">
+                  <Menu size={18} aria-hidden className="menu-open" />
+                  <X size={18} aria-hidden className="menu-close absolute" />
+                </span>
+              </summary>
+              <ul
+                className="panel absolute right-0 mt-2 w-52 p-2 shadow-xl"
+                onClick={(e) => { (e.currentTarget.parentElement as HTMLDetailsElement).open = false; }}
+              >
+                {[...NAV, '/contact'].map((to) => (
+                  <li key={to}>{navLink(to, 'block rounded-xl px-4 py-2.5 hover:bg-ink/[0.05] aria-[current=page]:text-primary')}</li>
+                ))}
+              </ul>
+            </details>
+          </div>
         </nav>
       </header>
 
-      <main id="top">
-        {/* Hero */}
-        <section className="wrap pt-20 pb-24 sm:pt-28 sm:pb-32 grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <p className="label flex items-center gap-2 mb-8 rise">
-              <span className="dot" aria-hidden /> {PROFILE.status} · {PROFILE.location}
-            </p>
-            <h1 className="font-serif text-[clamp(2.75rem,6.5vw,5.75rem)] leading-[0.95] tracking-tight rise" style={{ animationDelay: '.1s' }}>
-              {PROFILE.role}.<br />
-              <span className="text-muted italic">{PROFILE.headline}</span>
-            </h1>
-            <div className="mt-12 flex flex-wrap gap-4 rise" style={{ animationDelay: '.2s' }}>
-              <a href="#work" className="btn">See selected work</a>
-              <a href={PROFILE.resume} download="Abhishek_Sinha_Resume.pdf" className="btn-ghost inline-flex items-center gap-2">
-                <FileText size={16} aria-hidden /> Download resume
-              </a>
-            </div>
-          </div>
-          {hasWebGL ? (
-            <Suspense fallback={<DeviceScene />}><Scene3D /></Suspense>
-          ) : (
-            <DeviceScene />
-          )}
-        </section>
-
-        {/* Work */}
-        <section id="work" className="wrap py-24 border-t border-line">
-          <Label n="01">Selected work</Label>
-          <div className="space-y-32">
-            {PROJECTS.map((p, i) => (
-              <article key={p.name} className="reveal grid lg:grid-cols-12 gap-10">
-                <div className="lg:col-span-5">
-                  <p className="label mb-3">{String(i + 1).padStart(2, '0')} · {p.year}</p>
-                  <h2 className="font-serif text-5xl mb-3">{p.name}</h2>
-                  <p className="text-lg text-muted mb-8">{p.tagline}</p>
-
-                  <dl className="space-y-6 text-[15px] leading-relaxed">
-                    <div><dt className="label mb-1">Problem</dt><dd>{p.problem}</dd></div>
-                    <div><dt className="label mb-1">Role</dt><dd>{p.role}</dd></div>
-                    <div>
-                      <dt className="label mb-1">What I built</dt>
-                      <dd>
-                        <ul className="list-disc pl-5 space-y-1 marker:text-accent">
-                          {p.built.map((b) => <li key={b}>{b}</li>)}
-                        </ul>
-                      </dd>
-                    </div>
-                  </dl>
-
-                  <ul className="flex flex-wrap gap-2 mt-8" aria-label="Tech stack">
-                    {p.stack.map((t) => <li key={t} className="chip">{t}</li>)}
-                  </ul>
-                  <div className="flex flex-wrap gap-3 mt-8">
-                    {p.live && (
-                      <a href={p.live} target="_blank" rel="noopener noreferrer" className="btn">
-                        <Globe size={16} aria-hidden className="mr-2" /> {p.live.includes('play.google.com') ? 'Get it on Google Play' : 'Visit live site'}
-                      </a>
-                    )}
-                    {p.github && (
-                      <a href={p.github} target="_blank" rel="noopener noreferrer" className="btn-sm">
-                        <Github size={16} aria-hidden /> View code on GitHub
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <a
-                  href={p.live ?? p.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="lg:col-span-7 shot"
-                  aria-label={`Open ${p.name}`}
-                >
-                  <img src={p.image} alt={`${p.name} screenshot`} loading="lazy" width={1536} height={1024} />
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Experience + skills */}
-        <section id="experience" className="wrap py-24 border-t border-line">
-          <Label n="02">Experience</Label>
-          <div className="grid lg:grid-cols-12 gap-16">
-            <div className="lg:col-span-5">
-              <p className="font-serif text-3xl leading-snug">{PROFILE.summary}</p>
-              <div className="reveal mt-12 space-y-6 text-[15px]">
-                <div>
-                  <p className="label mb-2">Education</p>
-                  <p className="font-medium">{EDUCATION.degree}</p>
-                  <p className="text-muted">{EDUCATION.school} · {EDUCATION.period}</p>
-                </div>
-                <div>
-                  <p className="label mb-2">Certifications</p>
-                  <ul className="space-y-1 text-muted">{CERTIFICATIONS.map((c) => <li key={c}>{c}</li>)}</ul>
-                </div>
-              </div>
-            </div>
-            <ol className="lg:col-span-7 space-y-12">
-              {EXPERIENCE.map((j) => (
-                <li key={j.title + j.period} className="reveal grid sm:grid-cols-[10rem_1fr] gap-2 sm:gap-8">
-                  <p className="label pt-1">{j.period}</p>
-                  <div>
-                    <h3 className="text-xl font-medium">{j.title}</h3>
-                    <p className="text-muted mb-3">{j.company}</p>
-                    <ul className="space-y-1 text-[15px] text-muted">
-                      {j.points.map((pt) => <li key={pt}>— {pt}</li>)}
-                    </ul>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="reveal mt-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-            {SKILLS.map((s) => (
-              <div key={s.group}>
-                <p className="label mb-3">{s.group}</p>
-                <ul className="space-y-1">{s.items.map((it) => <li key={it}>{it}</li>)}</ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Ideas */}
-        <section id="ideas" className="wrap py-24 border-t border-line">
-          <Label n="03">Ideas I'm working through</Label>
-          <div className="grid md:grid-cols-3 gap-px bg-line border border-line">
-            {IDEAS.map((idea) => (
-              <article key={idea.title} className="reveal bg-paper p-8 flex flex-col">
-                <p className="chip self-start mb-6">{idea.status}</p>
-                <h3 className="font-serif text-2xl mb-4">{idea.title}</h3>
-                <p className="text-[15px] mb-4"><span className="label block mb-1">Problem</span>{idea.problem}</p>
-                <p className="text-[15px] text-muted"><span className="label block mb-1">Approach</span>{idea.approach}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Contact */}
-        <section id="contact" className="wrap py-24 border-t border-line grid lg:grid-cols-12 gap-16">
-          <div className="lg:col-span-5">
-            <Label n="04">Contact</Label>
-            <h2 className="font-serif text-5xl leading-tight mb-8">Let’s build something together.</h2>
-            <ul className="space-y-3">
-              <li><a href={`mailto:${PROFILE.email}`} className="link inline-flex items-center gap-2"><Mail size={16} aria-hidden /> {PROFILE.email}</a></li>
-              <li><ExtLink href={PROFILE.linkedin}><Linkedin size={16} aria-hidden /> LinkedIn</ExtLink></li>
-              <li><ExtLink href={PROFILE.github}><Github size={16} aria-hidden /> GitHub</ExtLink></li>
-              <li><ExtLink href={PROFILE.blog}><PenLine size={16} aria-hidden /> Blog — mycodeyatra.com</ExtLink></li>
-            </ul>
-          </div>
-          <div className="lg:col-span-7"><Contact /></div>
-        </section>
+      <main id="main" key={path}>
+        <Page />
       </main>
 
-      <footer className="wrap py-10 border-t border-line flex justify-between text-sm text-muted">
-        <span>© {new Date().getFullYear()} {PROFILE.name}</span>
-        <a href="#top" className="link">Back to top ↑</a>
+      <footer className="border-t border-line">
+        <div className="wrap flex flex-col gap-6 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+          <span>© {new Date().getFullYear()} {PROFILE.name}</span>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {[...NAV, '/contact'].map((to) => <li key={to}>{navLink(to, 'link')}</li>)}
+          </ul>
+        </div>
       </footer>
     </>
   );

@@ -3,10 +3,11 @@
 export const PROFILE = {
   name: 'Abhishek Sinha',
   role: 'Web & Mobile Engineer',
+  title: 'Associate Frontline Deployment Engineer at TechSignific | Web Developer | Mobile App Developer',
   headline: 'I build secure, fast products — from the API to the app in your pocket.',
   summary:
     'Full-stack and mobile engineer who enjoys both sides of the stack — smooth interfaces and the reliable systems behind them. Currently an Associate Frontline Deployment Engineer at Tech Signific, taking software from requirements to production.',
-  location: 'Jamshedpur, India · Open to remote',
+  location: 'Based in Jamshedpur, India, and open to remote roles',
   status: 'Open to new roles',
   email: 'abhisheksinha20009k@gmail.com',
   github: 'https://github.com/abhisheksinha20p',
@@ -25,10 +26,31 @@ export type Project = {
   built: string[];
   stack: string[];
   live?: string;
+  website?: string;
+  tint: string; // RGB triplet used for the project's glow
   github?: string;
 };
 
 export const PROJECTS: Project[] = [
+  {
+    name: 'Vera',
+    year: '2026',
+    tagline: 'A calm daily planner, live on Google Play',
+    image: '/img/vera-portfolio-hero.png',
+    problem:
+      'Most task apps turn into another source of noise. Vera shows only what matters today: tasks, daily habits with streaks and reminders that fire at the exact time you chose.',
+    role: 'Solo — product, design, mobile app, backend, infrastructure and Play Store launch',
+    built: [
+      'Android app in React Native and Expo with a local-first Today view, daily habits and streaks, exact-time reminders and voice typing',
+      'Microservice backend (gateway, auth, tasks, calendar, billing, admin) with gRPC, Kafka, Redis and one MongoDB database per service',
+      'Email sign-in with one-time codes, a role-based admin console and Google Play Billing for an optional subscription',
+      'Production on Docker with HTTPS (Let’s Encrypt), CI-built signed Android bundles and an ad-free, privacy-first design',
+    ],
+    stack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'gRPC', 'Kafka', 'Redis', 'MongoDB', 'Docker', 'GitHub Actions'],
+    live: 'https://play.google.com/store/apps/details?id=in.solution.vera',
+    website: 'https://vera.solutionss.in/',
+    tint: '20 184 166',
+  },
   {
     name: 'ClientFlow',
     year: '2025',
@@ -46,23 +68,7 @@ export const PROJECTS: Project[] = [
     stack: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Docker'],
     live: 'https://client-flow-teal.vercel.app/',
     github: 'https://github.com/abhisheksinha20p/ClientFlow',
-  },
-  {
-    name: 'Vera',
-    year: '2026',
-    tagline: 'A calm daily planner, live on Google Play',
-    image: '/img/vera-portfolio-hero.png',
-    problem:
-      'Most task apps turn into another source of noise. Vera shows only what matters today: tasks, daily habits with streaks and reminders that fire at the exact time you chose.',
-    role: 'Solo — product, design, mobile app, backend, infrastructure and Play Store launch',
-    built: [
-      'Android app in React Native and Expo with a local-first Today view, daily habits and streaks, exact-time reminders and voice typing',
-      'Microservice backend (gateway, auth, tasks, calendar, billing, admin) with gRPC, Kafka, Redis and one MongoDB database per service',
-      'Email sign-in with one-time codes, a role-based admin console and Google Play Billing for an optional subscription',
-      'Production on Docker with HTTPS (Let’s Encrypt), CI-built signed Android bundles and an ad-free, privacy-first design',
-    ],
-    stack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'gRPC', 'Kafka', 'Redis', 'MongoDB', 'Docker', 'GitHub Actions'],
-    live: 'https://play.google.com/store/apps/details?id=in.solution.vera',
+    tint: '59 130 246',
   },
 ];
 
