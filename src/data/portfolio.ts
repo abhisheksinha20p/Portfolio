@@ -3,6 +3,7 @@
 export const PROFILE = {
   name: 'Abhishek Sinha',
   role: 'Web & Mobile Engineer',
+  title: 'Associate Frontline Deployment Engineer at TechSignific | Web Developer | Mobile App Developer',
   headline: 'I build secure, fast products — from the API to the app in your pocket.',
   summary:
     'Full-stack and mobile engineer who enjoys both sides of the stack — smooth interfaces and the reliable systems behind them. Currently an Associate Frontline Deployment Engineer at Tech Signific, taking software from requirements to production.',
@@ -25,6 +26,7 @@ export type Project = {
   built: string[];
   stack: string[];
   live?: string;
+  website?: string;
   github?: string;
 };
 
@@ -63,6 +65,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'gRPC', 'Kafka', 'Redis', 'MongoDB', 'Docker', 'GitHub Actions'],
     live: 'https://play.google.com/store/apps/details?id=in.solution.vera',
+    website: 'https://vera.solutionss.in/',
   },
 ];
 

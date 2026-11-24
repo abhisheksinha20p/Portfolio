@@ -61,7 +61,8 @@ export default function App() {
               {PROFILE.role}.<br />
               <span className="text-muted italic">{PROFILE.headline}</span>
             </h1>
-            <div className="mt-12 flex flex-wrap gap-4 rise" style={{ animationDelay: '.2s' }}>
+            <p className="mt-8 max-w-xl text-[15px] text-muted rise" style={{ animationDelay: '.15s' }}>{PROFILE.title}</p>
+            <div className="mt-10 flex flex-wrap gap-4 rise" style={{ animationDelay: '.2s' }}>
               <a href="#work" className="btn">See selected work</a>
               <a href={PROFILE.resume} download="Abhishek_Sinha_Resume.pdf" className="btn-ghost inline-flex items-center gap-2">
                 <FileText size={16} aria-hidden /> Download resume
@@ -106,6 +107,11 @@ export default function App() {
                     {p.live && (
                       <a href={p.live} target="_blank" rel="noopener noreferrer" className="btn">
                         <Globe size={16} aria-hidden className="mr-2" /> {p.live.includes('play.google.com') ? 'Get it on Google Play' : 'Visit live site'}
+                      </a>
+                    )}
+                    {p.website && (
+                      <a href={p.website} target="_blank" rel="noopener noreferrer" className="btn-sm">
+                        <Globe size={16} aria-hidden /> Visit {p.name} website
                       </a>
                     )}
                     {p.github && (
