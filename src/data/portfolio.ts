@@ -7,7 +7,7 @@ export const PROFILE = {
   headline: 'I build secure, fast products — from the API to the app in your pocket.',
   summary:
     'Full-stack and mobile engineer who enjoys both sides of the stack — smooth interfaces and the reliable systems behind them. Currently an Associate Frontline Deployment Engineer at Tech Signific, taking software from requirements to production.',
-  location: 'Jamshedpur, India · Open to remote',
+  location: 'Based in Jamshedpur, India, and open to remote roles',
   status: 'Open to new roles',
   email: 'abhisheksinha20009k@gmail.com',
   github: 'https://github.com/abhisheksinha20p',

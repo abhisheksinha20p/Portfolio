@@ -29,14 +29,6 @@ export default function App() {
 
   useEffect(() => {
     document.title = !route ? `Not found · ${PROFILE.name}` : path === '/' ? BASE_TITLE : `${route.title} · ${PROFILE.name}`;
-
-    // Fade cards in as they scroll into view (re-run for each page).
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))),
-      { threshold: 0.12 },
-    );
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-    return () => io.disconnect();
   }, [path, route]);
 
   const navLink = (to: string, className: string) => (
@@ -52,7 +44,7 @@ export default function App() {
       {/* Solid, blurred bar that sits above the content (sticky, so it never overlaps the page top). */}
       <header className="sticky top-0 z-30 border-b border-line bg-paper/90 backdrop-blur-md">
         <nav className="wrap flex h-16 items-center justify-between gap-4" aria-label="Main">
-          <Link to="/" className="font-serif text-2xl">{PROFILE.name}</Link>
+          <Link to="/" className="font-display text-xl font-extrabold tracking-tight">{PROFILE.name}</Link>
 
           <NavBar path={path} items={NAV.map((to) => ({ to, label: ROUTES[to].title }))} />
 
@@ -69,11 +61,11 @@ export default function App() {
                 </span>
               </summary>
               <ul
-                className="card absolute right-0 mt-2 w-52 p-2 shadow-xl"
+                className="panel absolute right-0 mt-2 w-52 p-2 shadow-xl"
                 onClick={(e) => { (e.currentTarget.parentElement as HTMLDetailsElement).open = false; }}
               >
                 {[...NAV, '/contact'].map((to) => (
-                  <li key={to}>{navLink(to, 'block rounded-xl px-4 py-2.5 hover:bg-paper aria-[current=page]:text-accent')}</li>
+                  <li key={to}>{navLink(to, 'block rounded-xl px-4 py-2.5 hover:bg-ink/[0.05] aria-[current=page]:text-primary')}</li>
                 ))}
               </ul>
             </details>

@@ -2,24 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tokens: see DESIGN.md */
 :root {
-  --paper: 247 245 241;
+  --paper: 243 245 244;
   --surface: 255 255 255;
-  --ink: 20 19 18;
-  --muted: 104 100 94;
-  --line: 228 224 216;
-  --accent: 194 65 12;
+  --ink: 16 32 28;
+  --muted: 85 102 95;
+  --line: 217 224 220;
+  --primary: 15 118 110;
+  --on-primary: 255 255 255;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: 12 12 13;
-    --surface: 22 22 24;
-    --ink: 237 235 230;
-    --muted: 152 148 141;
-    --line: 40 40 43;
-    --accent: 251 146 60;
+    --paper: 14 21 19;
+    --surface: 21 32 29;
+    --ink: 230 237 234;
+    --muted: 147 163 156;
+    --line: 37 50 46;
+    --primary: 79 209 190;
+    --on-primary: 6 26 23;
     color-scheme: dark;
   }
 }
@@ -27,11 +30,10 @@
 @layer base {
   html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
   body {
-    @apply bg-paper text-ink font-sans antialiased;
-    font-feature-settings: 'ss01', 'cv11';
+    @apply bg-paper font-sans text-base text-ink antialiased;
   }
-  ::selection { background: rgb(var(--accent)); color: rgb(var(--paper)); }
-  :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; }
+  ::selection { background: rgb(var(--primary)); color: rgb(var(--on-primary)); }
+  :focus-visible { outline: 2px solid rgb(var(--primary)); outline-offset: 3px; border-radius: 6px; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -50,26 +52,39 @@ header { view-transition-name: site-header; }
 
 @layer components {
   .wrap { @apply mx-auto max-w-6xl px-4 sm:px-8; }
-  .page { @apply relative py-16 sm:py-24; }
-  .eyebrow { @apply font-mono text-xs uppercase tracking-[0.16em] text-muted; }
-  .title { @apply font-serif text-[clamp(2.5rem,5.5vw,4.25rem)] leading-[1] tracking-tight; }
-  .link { @apply underline decoration-line underline-offset-4 transition-colors hover:decoration-accent hover:text-accent; }
-  .chip { @apply font-mono text-[11px] rounded-full border border-line bg-surface/60 px-3 py-1; }
-  .card { @apply rounded-3xl border border-line bg-surface; }
+  .page { @apply py-16 sm:py-24; }
 
-  .btn {
-    @apply inline-flex items-center gap-2 rounded-full bg-ink text-paper px-6 py-3 text-sm font-medium
-      transition-transform hover:-translate-y-0.5 active:scale-[0.97] disabled:opacity-60;
+  /* Type */
+  .hero-name {
+    @apply font-display font-extrabold;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
   }
-  .btn-ghost {
-    @apply inline-flex items-center gap-2 rounded-full border border-line bg-surface/50 px-5 py-3 text-sm
-      transition-colors hover:border-accent hover:text-accent;
+  .title { @apply font-display font-bold; font-size: clamp(2.75rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: -0.035em; }
+  .h2 { @apply font-display text-3xl font-bold tracking-tight sm:text-[2.75rem] sm:leading-[1.05]; }
+  .label { @apply text-sm font-medium text-muted; }
+  .link { @apply underline decoration-line decoration-1 underline-offset-[5px] transition-colors hover:text-primary hover:decoration-primary; }
+  .chip { @apply rounded-md bg-ink/[0.05] px-2.5 py-1 text-sm text-ink/80; }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-5 py-3 text-[15px] font-semibold text-on-primary
+      transition-[filter,transform] hover:brightness-110 active:scale-[0.98] disabled:opacity-60;
+  }
+  .btn-quiet {
+    @apply inline-flex items-center justify-center gap-2 rounded-[10px] border border-ink/20 px-5 py-3 text-[15px] font-medium
+      transition-colors hover:border-primary hover:text-primary;
+  }
+  .icon-btn {
+    @apply flex h-11 w-11 items-center justify-center rounded-[10px] border border-line
+      transition-colors hover:border-primary hover:text-primary;
   }
 
   /* Navigation */
-  .nav-link { @apply relative z-[1] block rounded-full px-4 py-2 text-sm text-muted transition-colors duration-300 hover:text-ink; }
+  .nav-link { @apply relative z-[1] block rounded-lg px-3.5 py-2 text-[15px] text-muted transition-colors duration-300 hover:text-ink; }
   .nav-link[aria-current='page'] { @apply text-ink; }
-  .nav-indicator { @apply absolute bottom-1 left-0 top-1 rounded-full bg-ink/[0.08]; }
+  .nav-indicator { @apply absolute bottom-1 left-0 top-1 rounded-lg bg-ink/[0.07]; }
   .nav-indicator.is-ready {
     transition: transform 300ms cubic-bezier(0.2, 0, 0, 1), width 300ms cubic-bezier(0.2, 0, 0, 1), opacity 200ms ease;
   }
@@ -80,49 +95,51 @@ header { view-transition-name: site-header; }
   .menu-close { opacity: 0; scale: 0.25; filter: blur(4px); }
   .menu[open] .menu-open { opacity: 0; scale: 0.25; filter: blur(4px); }
   .menu[open] .menu-close { opacity: 1; scale: 1; filter: blur(0); }
-  .icon-btn {
-    @apply flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface/60
-      transition-colors hover:border-accent hover:text-accent;
-  }
 
-  /* Soft colour glow behind a section; colour comes from --tint */
-  .glow {
-    position: absolute; pointer-events: none; border-radius: 9999px; filter: blur(80px);
-    background: rgb(var(--tint, var(--accent)) / 0.22);
-  }
+  /* Divided rows (used instead of card grids) */
+  .rows > * { @apply border-t border-line; }
+  .rows > *:last-child { @apply border-b; }
+  .row-link { @apply grid items-baseline gap-2 py-6 transition-colors sm:grid-cols-[14rem_1fr_auto] sm:gap-8; }
+  .row-link:hover { @apply text-primary; }
+
+  .panel { @apply rounded-2xl border border-line bg-surface; }
 
   /* Scroll-linked motion. --p comes from useScrollMotion on the [data-motion] wrapper:
      items drift and tilt while travelling, and settle at --rot when centred. */
   .drift {
     transform:
-      translate3d(0, calc(var(--p, 0) * var(--depth, 1) * 70px), 0)
-      rotate(calc(var(--rot, 0deg) + var(--p, 0) * var(--spin, 6deg)));
+      translate3d(0, calc(var(--p, 0) * var(--depth, 1) * 60px), 0)
+      rotate(calc(var(--rot, 0deg) + var(--p, 0) * var(--spin, 5deg)));
     will-change: transform;
   }
-  .drift-text { transform: translate3d(0, calc(var(--p, 0) * 28px), 0); }
 
-  /* Device-style frames for real screenshots */
+  /* Real screenshots */
   .phone {
-    @apply overflow-hidden rounded-[2.4rem] border-[7px] border-[#0d0d0f] bg-[#0d0d0f]
-      shadow-[0_30px_60px_-15px_rgb(0_0_0/0.45)];
+    @apply overflow-hidden rounded-[2.25rem] border-[7px] border-[#0b1311] bg-[#0b1311]
+      shadow-[0_40px_80px_-30px_rgb(16_32_28/0.55)];
   }
-  .phone img { @apply block w-full h-auto rounded-[1.9rem]; }
+  .phone img { @apply block h-auto w-full rounded-[1.75rem]; }
+  /* On the dark page the phone's dark edge needs a faint rim to read */
+  @media (prefers-color-scheme: dark) {
+    .phone { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12), 0 40px 80px -30px rgb(0 0 0 / 0.7); }
+    .frame { box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.7); }
+  }
   .frame {
-    @apply overflow-hidden rounded-2xl border border-line bg-surface
-      shadow-[0_30px_60px_-20px_rgb(0_0_0/0.35)];
+    @apply overflow-hidden rounded-[20px] border border-line bg-surface
+      shadow-[0_40px_80px_-40px_rgb(16_32_28/0.5)];
   }
-  .frame img { @apply block w-full h-auto; }
+  .frame img { @apply block h-auto w-full; }
 
+  /* Form */
   .field { @apply flex flex-col gap-2; }
   .field input, .field textarea {
-    @apply bg-transparent border-b border-line py-2 text-base outline-none transition-colors resize-none focus:border-accent;
+    @apply rounded-[10px] border border-line bg-paper px-3.5 py-3 text-base outline-none transition-colors resize-none focus:border-primary;
   }
-  .label { @apply font-mono text-xs uppercase tracking-[0.14em] text-muted; }
 
-  /* Entrance + scroll reveal */
-  .rise { animation: rise 0.6s cubic-bezier(0.2, 0, 0, 1) both; }
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
-  .reveal.in { opacity: 1; transform: none; }
+  /* Home hero load sequence: the one orchestrated moment */
+  .load-1 { animation: rise 0.7s cubic-bezier(0.2, 0, 0, 1) both; }
+  .load-2 { animation: rise 0.7s 0.12s cubic-bezier(0.2, 0, 0, 1) both; }
+  .load-3 { animation: rise 0.8s 0.24s cubic-bezier(0.2, 0, 0, 1) both; }
 
-  .skip { @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-ink focus:text-paper focus:px-4 focus:py-2 focus:rounded; }
+  .skip { @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-paper; }
 }
